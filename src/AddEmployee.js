@@ -15,12 +15,13 @@ class AddEmployee extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.onClose();
-        console.log("Submitted");
     }
     addSkill(event) {
         event.preventDefault();
-        this.setState({skills: this.state.skills.concat(this.state.newSkillName)});
-        this.setState({newSkillName: ""});
+        this.setState({
+            skills: this.state.skills.concat(this.state.newSkillName),
+            newSkillName: ""
+        });
     }
     handleNewSkillChange(event) {
         this.setState({newSkillName: event.target.value});

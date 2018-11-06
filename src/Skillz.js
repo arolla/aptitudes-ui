@@ -18,15 +18,11 @@ class Skillz extends Component {
             });
     }
     createEmployee() {
-        this.setState({
-            createEmployee: true
-        });
+        this.setState({createEmployee: true});
     }
     onEmployeeCreated() {
         console.log("Employee done");
-        this.setState({
-            createEmployee:false
-        })
+        this.setState({createEmployee:false})
     }
     render() {
         return(

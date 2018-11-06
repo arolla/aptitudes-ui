@@ -25,6 +25,8 @@
   "proxy": "http://localhost:8080",
   "devDependencies": {
     "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0"
+    "enzyme-adapter-react-16": "^1.6.0",
+    "fetch-mock": "^7.2.5",
+    "node-fetch": "^2.2.1"
   }
 }
