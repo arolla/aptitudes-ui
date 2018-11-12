@@ -1,9 +1,6 @@
 import React from 'react';
 import AddEmployee from './AddEmployee';
-import Enzyme, {shallow, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({adapter: new Adapter()});
+import {shallow, mount} from 'enzyme';
 
 describe('AddEmployee', () => {
     it('starts with an empty name', () => {

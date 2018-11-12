@@ -15,6 +15,7 @@ class Skillz extends Component {
             .then(employees => {
                 const newState = Object.assign({}, this.state, {employees: employees});
                 this.setState(newState);
+                this.props.onMounted();
             });
     }
     createEmployee() {
