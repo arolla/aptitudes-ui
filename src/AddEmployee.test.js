@@ -1,6 +1,7 @@
 import React from 'react';
 import AddEmployee from './AddEmployee';
 import { shallow, mount } from 'enzyme';
+import fetchMock from 'fetch-mock';
 
 describe('AddEmployee', () => {
     it('starts with an empty name', () => {
@@ -30,4 +31,16 @@ describe('AddEmployee', () => {
         form.find('[type="submit"]').simulate('submit', { preventDefault: () => undefined });
         expect(onClose).toHaveBeenCalled();
     });
+    //TODO: where does this console error comes from?
+    //TODO: verify error is managed
+    //TODO: add callBacks onError and onCreation
+    it('creates employee on close', done => {
+        const employeeService = fetchMock.mock("/employees", []);
+        function onClose() {
+            expect(employeeService.called("/employees")).toBe(true);
+            done();
+        }
+        const form = mount(<AddEmployee onClose={onClose} />);
+        form.find('[type="submit"]').simulate('submit', { preventDefault: () => undefined });
+    })
 });

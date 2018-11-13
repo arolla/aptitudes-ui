@@ -13,8 +13,9 @@ describe('Skillz', () => {
 
   it('fetches stuff', done => {
     const expectedEmployees = [{ name: "Tim Banger", skills: [{ name: "bang" }] }];
-    fetchMock.mock("*", expectedEmployees);
+    const employeesService = fetchMock.mock("/employees", expectedEmployees);
     function onMounted() {
+      expect(employeesService.called("/employees")).toBe(true);
       expect(skillz.state().employees).toEqual(expectedEmployees);
       done();
     }

@@ -12,8 +12,25 @@ class AddEmployee extends Component {
     handleNameChange(event) {
         this.setState({ name: event.target.value });
     }
+    handleFetchErrors(response) {
+        if (!response.ok)
+            throw Error(JSON.stringify(response));
+        return response;
+    }
     handleSubmit(event) {
         event.preventDefault();
+        const employee = {name: this.state.name, skills: this.state.skills};
+        fetch("/employees", {
+            method: 'post',
+            body: employee
+        })
+        .then(response => response.json())
+        .then(data => this.handleFetchErrors(data))
+        .then(data => console.log("=== created " + JSON.stringify(employee) + " -> " + JSON.stringify(data)))
+        .catch(err => {
+            console.log("!!!! failed creating " + JSON.stringify(employee) + " caused by:");
+            console.log(err);
+        });
         this.props.onClose();
     }
     addSkill(event) {
