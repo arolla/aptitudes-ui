@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class AddEmployee extends Component {
     constructor() {
         super();
-        this.state = { 
+        this.state = {
             name: "",
             newSkillName: "",
             skills: []
@@ -24,7 +24,7 @@ class AddEmployee extends Component {
         });
     }
     handleNewSkillChange(event) {
-        this.setState({newSkillName: event.target.value});
+        this.setState({ newSkillName: event.target.value });
     }
 
     render() {
@@ -32,10 +32,10 @@ class AddEmployee extends Component {
             <div>
                 <p>Add employee</p>
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                    <p><label>Name:<input type="text" name="name" onChange={this.handleNameChange.bind(this)}/></label></p>
+                    <p><label>Name:<input type="text" name="name" onChange={this.handleNameChange.bind(this)} /></label></p>
                     {this.state.skills.map(skill => <p key={skill}><label className="skillName">{skill}</label></p>)}
                     <p>
-                        <input type="text" name="newSkillName" onChange={this.handleNewSkillChange.bind(this)}/>
+                        <input type="text" name="newSkillName" onChange={this.handleNewSkillChange.bind(this)} />
                         <button onClick={this.addSkill.bind(this)}>Add skill</button>
                     </p>
                     <button type="submit">Add</button>
