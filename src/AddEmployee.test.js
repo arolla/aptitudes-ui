@@ -24,22 +24,17 @@ describe('AddEmployee', () => {
         addSkill(form);
         expect(form.find('input[name="newSkillName"]').prop('value')).toBe("");
     });
-    it('calls onClose() when done', done => {
-        fetchMock.post("/employees", 200);
-        function onClose() {
-            done();
-        }
-        const form = mount(<AddEmployee onClose={onClose} />);
-        submit(form);
-    });
     //TODO: verify error is managed
     //TODO: add callBacks onError and onCreation
     it('creates employee on close', done => {
+        const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol" }] };
+ 
         const employeeService = fetchMock.post("/employees", 200);
         function onClose() {
-            expect(employeeService.lastOptions().body).toEqual(JSON.stringify({name: "Bond", skills: [{name: "alcohol"}]}));
+            expect(employeeService.lastOptions().body).toEqual(JSON.stringify(expectedEmployee));
             done();
         }
+ 
         const form = mount(<AddEmployee onClose={onClose} />);
         setEmployeeName(form, "Bond");
         setSkillName(form, "alcohol");
