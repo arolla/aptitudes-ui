@@ -6,7 +6,8 @@ class Skillz extends Component {
         super();
         this.state = {
             employees: [],
-            createEmployee: false
+            createEmployee: false,
+            message: "",
         };
     }
     componentDidMount() {
@@ -21,8 +22,10 @@ class Skillz extends Component {
         this.setState({ createEmployee: true });
     }
     onEmployeeAdded() {
-        console.log("Employee done");
-        this.setState({ createEmployee: false })
+        this.setState({ 
+            createEmployee: false,
+            message: "employee added"
+        });
     }
     render() {
         return (
@@ -42,6 +45,7 @@ class Skillz extends Component {
                     ? <AddEmployee onAdded={this.onEmployeeAdded.bind(this)} />
                     : null
                 }
+                <p>{this.state.message}</p>
             </div>
         );
     }
