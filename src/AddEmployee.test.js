@@ -37,6 +37,7 @@ describe('AddEmployee', () => {
     it('creates employee on close', done => {
         const employeeService = fetchMock.post("/employees", 200);
         function onClose() {
+            console.log(employeeService.calls());
             expect(employeeService.called("/employees")).toBe(true);
             done();
         }

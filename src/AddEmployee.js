@@ -7,7 +7,7 @@ class AddEmployee extends Component {
             name: "",
             newSkillName: "",
             skills: []
-        }
+        };
     }
     handleNameChange(event) {
         this.setState({ name: event.target.value });
@@ -19,7 +19,10 @@ class AddEmployee extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        const jsonEmployee = JSON.stringify({name: this.state.name, skills: this.state.skills});
+        const jsonSkills = this.state.skills.map(name => {
+            return {"name": name}
+        });
+        const jsonEmployee = JSON.stringify({name: this.state.name, skills: jsonSkills});
         fetch("/employees", {
             method: 'POST',
             body: jsonEmployee,

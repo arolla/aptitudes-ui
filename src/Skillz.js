@@ -13,8 +13,7 @@ class Skillz extends Component {
         fetch("/employees")
             .then(result => result.json())
             .then(employees => {
-                const newState = Object.assign({}, this.state, { employees: employees });
-                this.setState(newState);
+                this.setState({ employees });
                 this.props.onMounted();
             });
     }
