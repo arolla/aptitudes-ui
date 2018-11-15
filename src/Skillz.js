@@ -39,7 +39,7 @@ class Skillz extends Component {
                 }</ul>
                 <button onClick={this.createEmployee.bind(this)}>Do you wanna create?</button>
                 {this.state.createEmployee
-                    ? <AddEmployee onClose={this.onEmployeeAdded.bind(this)} />
+                    ? <AddEmployee onAdded={this.onEmployeeAdded.bind(this)} />
                     : null
                 }
             </div>

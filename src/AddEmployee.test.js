@@ -30,12 +30,12 @@ describe('AddEmployee', () => {
         const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol" }] };
  
         const employeeService = fetchMock.post("/employees", 200);
-        function onClose() {
+        function onAdded() {
             expect(employeeService.lastOptions().body).toEqual(JSON.stringify(expectedEmployee));
             done();
         }
  
-        const form = mount(<AddEmployee onClose={onClose} />);
+        const form = mount(<AddEmployee onAdded={onAdded} />);
         setEmployeeName(form, "Bond");
         setSkillName(form, "alcohol");
         addSkill(form);
