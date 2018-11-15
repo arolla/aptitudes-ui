@@ -20,9 +20,9 @@ describe('AddEmployee', () => {
     it('resets newSkillName when added', () => {
         const form = shallow(<AddEmployee />);
         setSkillName(form, "skikill");
-        expect(form.state().newSkillName).toBe("skikill");
+        expect(form.find('input[name="newSkillName"]').prop('value')).toBe("skikill");
         addSkill(form);
-        expect(form.state().newSkillName).toBe("");
+        expect(form.find('input[name="newSkillName"]').prop('value')).toBe("");
     });
     it('calls onClose() when done', done => {
         fetchMock.post("/employees", 200);
@@ -37,11 +37,13 @@ describe('AddEmployee', () => {
     it('creates employee on close', done => {
         const employeeService = fetchMock.post("/employees", 200);
         function onClose() {
-            console.log(employeeService.calls());
-            expect(employeeService.called("/employees")).toBe(true);
+            expect(employeeService.lastOptions().body).toEqual(JSON.stringify({name: "Bond", skills: [{name: "alcohol"}]}));
             done();
         }
         const form = mount(<AddEmployee onClose={onClose} />);
+        setEmployeeName(form, "Bond");
+        setSkillName(form, "alcohol");
+        addSkill(form);
         submit(form);
     })
 });
@@ -50,12 +52,14 @@ function addSkill(form) {
     form.find('button[children="Add skill"]')
         .simulate('click', { preventDefault: () => undefined });
 }
-
 function setSkillName(form, name) {
     form.find('input[name="newSkillName"]')
         .simulate('change', { target: { value: name } });
 }
-
+function setEmployeeName(form, name) {
+    form.find('input[name="name"]')
+        .simulate('change', { target: { value: name } });
+}
 function submit(form) {
     form.find('[type="submit"]').simulate('submit', { preventDefault: () => undefined });
 }
