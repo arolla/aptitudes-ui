@@ -21,4 +21,36 @@ describe('Skillz', () => {
     }
     const skillz = shallow(<Skillz onMounted={onMounted} />);
   })
+
+  it('displays message when employee created', () => {
+    const skillz = shallow(<Skillz />);
+    skillz.find('button').simulate('click');
+    skillz.find("AddEmployee").prop('onAdded')();
+    expect(skillz.find('.message').text()).toEqual("employee added");
+  })
+
+  it('displays error when employee creation failed', () => {
+    const skillz = shallow(<Skillz />);
+    skillz.find('button').simulate('click');
+    skillz.find("AddEmployee").prop('onError')();
+    expect(skillz.find('.error').text()).toMatch(/^employee creation failed.*/);
+  })
+
+  it('resets error on message', () => {
+    const skillz = shallow(<Skillz />);
+    skillz.find('button').simulate('click');
+    skillz.find("AddEmployee").prop('onError')();
+    skillz.find('button').simulate('click');
+    skillz.find("AddEmployee").prop('onAdded')();
+    expect(skillz.find('.error').text()).toEqual("");
+  })
+
+  it('resets message on error', () => {
+    const skillz = shallow(<Skillz />);
+    skillz.find('button').simulate('click');
+    skillz.find("AddEmployee").prop('onAdded')();
+    skillz.find('button').simulate('click');
+    skillz.find("AddEmployee").prop('onError')();
+    expect(skillz.find('.message').text()).toEqual("");
+  })
 });

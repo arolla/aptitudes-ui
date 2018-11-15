@@ -24,8 +24,6 @@ describe('AddEmployee', () => {
         addSkill(form);
         expect(form.find('input[name="newSkillName"]').prop('value')).toBe("");
     });
-    //TODO: verify error is managed
-    //TODO: add callBacks onError and onCreation
     it('creates employee on submit', done => {
         const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol" }] };
  

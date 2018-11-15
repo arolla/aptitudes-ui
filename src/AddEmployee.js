@@ -14,7 +14,7 @@ class AddEmployee extends Component {
     }
     handleFetchErrors(response) {
         if (!response.ok)
-            throw Error(JSON.stringify(response));
+            throw Error(response.statusText);
         return response;
     }
     handleSubmit(event) {
@@ -35,7 +35,7 @@ class AddEmployee extends Component {
             this.handleFetchErrors(response);
             response.json();
         })
-        .then(data => this.props.onAdded())
+        .then(() => this.props.onAdded())
         .catch(err => this.props.onError(err));
     }
     addSkill(event) {

@@ -8,6 +8,7 @@ class Skillz extends Component {
             employees: [],
             createEmployee: false,
             message: "",
+            error:"",
         };
     }
     componentDidMount() {
@@ -24,13 +25,20 @@ class Skillz extends Component {
     onEmployeeAdded() {
         this.setState({ 
             createEmployee: false,
-            message: "employee added"
+            message: "employee added",
+            error: "",
+        });
+    }
+    onError(error) {
+        this.setState({
+            error: "employee creation failed: " + error,
+            message: "",
         });
     }
     render() {
         return (
             <div>
-                <p>employees:</p>
+                <h1>employees:</h1>
                 <ul>{
                     this.state.employees.map(employee =>
                         <li key={employee.name}>{employee.name}
@@ -42,10 +50,11 @@ class Skillz extends Component {
                 }</ul>
                 <button onClick={this.createEmployee.bind(this)}>Do you wanna create?</button>
                 {this.state.createEmployee
-                    ? <AddEmployee onAdded={this.onEmployeeAdded.bind(this)} />
+                    ? <AddEmployee onAdded={this.onEmployeeAdded.bind(this)} onError={this.onError.bind(this)} />
                     : null
                 }
-                <p>{this.state.message}</p>
+                <p className='message'>{this.state.message}</p>
+                <p className='error'>{this.state.error}</p>
             </div>
         );
     }
