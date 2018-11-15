@@ -26,7 +26,7 @@ describe('AddEmployee', () => {
     });
     //TODO: verify error is managed
     //TODO: add callBacks onError and onCreation
-    it('creates employee on close', done => {
+    it('creates employee on submit', done => {
         const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol" }] };
  
         const employeeService = fetchMock.post("/employees", 200);
@@ -39,6 +39,14 @@ describe('AddEmployee', () => {
         setEmployeeName(form, "Bond");
         setSkillName(form, "alcohol");
         addSkill(form);
+        submit(form);
+    })
+    it('handles employee creation service errors', done => {
+        fetchMock.post("/employees", 500);
+        function onError() {
+            done();
+        }
+        const form = mount(<AddEmployee onError={onError} />);
         submit(form);
     })
 });
