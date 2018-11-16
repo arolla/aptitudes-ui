@@ -8,6 +8,10 @@ class AddEmployee extends Component {
             newSkillName: "",
             skills: []
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleNewSkillChange = this.handleNewSkillChange.bind(this);
+        this.addSkill = this.addSkill.bind(this);
     }
     handleNameChange(event) {
         this.setState({ name: event.target.value });
@@ -53,12 +57,12 @@ class AddEmployee extends Component {
         return (
             <div>
                 <p>Add employee</p>
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                    <p><label>Name:<input type="text" name="name" onChange={this.handleNameChange.bind(this)} /></label></p>
+                <form onSubmit={this.handleSubmit}>
+                    <p><label>Name:<input type="text" name="name" onChange={this.handleNameChange} /></label></p>
                     {this.state.skills.map(skill => <p key={skill}><label className="skillName">{skill}</label></p>)}
                     <p>
-                        <input type="text" name="newSkillName" onChange={this.handleNewSkillChange.bind(this)} value={this.state.newSkillName} />
-                        <button onClick={this.addSkill.bind(this)}>Add skill</button>
+                        <input type="text" name="newSkillName" onChange={this.handleNewSkillChange} value={this.state.newSkillName} />
+                        <button onClick={this.addSkill}>Add skill</button>
                     </p>
                     <button type="submit">Add</button>
                 </form>

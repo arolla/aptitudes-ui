@@ -10,6 +10,9 @@ class Skillz extends Component {
             message: "",
             error:"",
         };
+        this.createEmployee = this.createEmployee.bind(this);
+        this.onEmployeeAdded = this.onEmployeeAdded.bind(this);
+        this.onError = this.onError.bind(this);
     }
     componentDidMount() {
         fetch("/employees")
@@ -48,9 +51,9 @@ class Skillz extends Component {
                         </li>
                     )
                 }</ul>
-                <button onClick={this.createEmployee.bind(this)}>Do you wanna create?</button>
+                <button onClick={this.createEmployee}>Do you wanna create?</button>
                 {this.state.createEmployee
-                    ? <AddEmployee onAdded={this.onEmployeeAdded.bind(this)} onError={this.onError.bind(this)} />
+                    ? <AddEmployee onAdded={this.onEmployeeAdded} onError={this.onError} />
                     : null
                 }
                 <p className='message'>{this.state.message}</p>
