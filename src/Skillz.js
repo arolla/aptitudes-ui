@@ -15,11 +15,15 @@ class Skillz extends Component {
         this.onError = this.onError.bind(this);
     }
     componentDidMount() {
+        this.loadEmployees();
+    }
+    loadEmployees() {
         fetch("/employees")
             .then(result => result.json())
-            .then(employees => {
-                this.setState({ employees });
-                this.props.onMounted();
+            .then(employees => this.setState({ employees }))
+            .then(() => {
+                if (this.props.onRefreshed)
+                    this.props.onRefreshed();
             });
     }
     createEmployee() {

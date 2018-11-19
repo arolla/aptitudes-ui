@@ -14,12 +14,12 @@ describe('Skillz', () => {
   it('fetches stuff', done => {
     const expectedEmployees = [{ name: "Tim Banger", skills: [{ name: "bang" }] }];
     const employeesService = fetchMock.mock("/employees", expectedEmployees);
-    function onMounted() {
+    function onRefreshed() {
       expect(employeesService.called("/employees")).toBe(true);
       expect(skillz.state().employees).toEqual(expectedEmployees);
       done();
     }
-    const skillz = shallow(<Skillz onMounted={onMounted} />);
+    const skillz = shallow(<Skillz onRefreshed={onRefreshed} />);
   })
 
   it('displays message when employee created', () => {
