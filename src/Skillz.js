@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AddEmployee from './AddEmployee';
+import EmployeeService from './EmployeeService';
 
 class Skillz extends Component {
     constructor() {
@@ -18,8 +19,7 @@ class Skillz extends Component {
         this.loadEmployees();
     }
     loadEmployees() {
-        fetch("/employees")
-            .then(result => result.json())
+        EmployeeService.all()
             .then(employees => this.setState({ employees }))
             .then(() => {
                 if (this.props.onRefreshed)

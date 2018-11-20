@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EmployeeService from './EmployeeService';
 
 class AddEmployee extends Component {
     constructor() {
@@ -18,34 +19,18 @@ class AddEmployee extends Component {
     handleNameChange(event) {
         this.setState({ name: event.target.value });
     }
-    handleFetchErrors(response) {
-        if (!response.ok)
-            throw Error(response.statusText);
-        return response;
-    }
     handleSubmit(event) {
         event.preventDefault();
         const jsonEmployee = JSON.stringify({name: this.state.name, skills: this.state.skills});
-        fetch("/employees", {
-            method: 'POST',
-            body: jsonEmployee,
-            headers: {
-                'Content-Type': "application/json;charset=UTF-8",
-                Accept: 'application/json'
-            }
-        })
-        .then(response => {
-            this.handleFetchErrors(response);
-            response.json();
-        })
-        .then(() =>  {
-            if (this.props.onAdded)
-                this.props.onAdded();
-        })
-        .catch(err => {
-            if (this.props.onError)
-                this.props.onError(err);
-        });
+        EmployeeService.create(jsonEmployee)
+            .then(() =>  {
+                if (this.props.onAdded)
+                    this.props.onAdded();
+            })
+            .catch(err => {
+                if (this.props.onError)
+                    this.props.onError(err);
+            });
     }
     addSkill(event) {
         event.preventDefault();
