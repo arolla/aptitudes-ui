@@ -51,7 +51,8 @@ class AddEmployee extends Component {
         event.preventDefault();
         this.setState({
             skills: this.state.skills.concat({name: this.state.newSkillName, level: this.state.newSkillLevel}),
-            newSkillName: ""
+            newSkillName: "",
+            newSkillLevel: "",
         });
     }
     handleNewSkillNameChange(event) {
@@ -69,7 +70,11 @@ class AddEmployee extends Component {
                 <p>Add employee</p>
                 <form onSubmit={this.handleSubmit}>
                     <p><label>Name:<input type="text" name="name" onChange={this.handleNameChange} /></label></p>
-                    {this.state.skills.map(skill => <p key={skill.name}><label className="skillName">{skill.name}</label></p>)}
+                    {this.state.skills.map(skill => <p key={skill.name}>
+                        <label className="skillName">{skill.name}</label>
+                        <label>-></label>
+                        <label className="skillLevel">{skill.level}</label>
+                    </p>)}
                     <p>
                         <input type="text" name="newSkillName" onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
                         <input type="number" name="newSkillLevel" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />

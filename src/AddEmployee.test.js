@@ -16,16 +16,21 @@ describe('AddEmployee', () => {
     it('adds skill', () => {
         const form = shallow(<AddEmployee />);
         setSkillName(form, "skikill");
+        setSkillLevel(form, "1");
         addSkill(form);
         expect(form.find('.skillName').map(label => label.text())).toEqual(["skikill"]);
+        expect(form.find('.skillLevel').map(label => label.text())).toEqual(["1"]);
     });
 
     it('resets newSkillName when added', () => {
         const form = shallow(<AddEmployee />);
         setSkillName(form, "skikill");
+        setSkillLevel(form, "2");
         expect(form.find('input[name="newSkillName"]').prop('value')).toBe("skikill");
+        expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("2");
         addSkill(form);
         expect(form.find('input[name="newSkillName"]').prop('value')).toBe("");
+        expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("");
     });
 
     it('creates employee on submit', done => {
