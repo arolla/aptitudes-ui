@@ -35,6 +35,7 @@ class Skillz extends Component {
             message: "employee added",
             error: "",
         });
+        this.loadEmployees();
     }
     onError(error) {
         this.setState({
