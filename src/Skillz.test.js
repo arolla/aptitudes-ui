@@ -16,7 +16,7 @@ describe('Skillz', () => {
   });
 
   it('fetches stuff', done => {
-    const expectedEmployees = [{ name: "Tim Banger", skills: [{ name: "bang" }] }];
+    const expectedEmployees = [{ name: "Tim Banger", skills: [{ name: "bang", level: "1" }] }];
     const employeesService = fetchMock.mock("/employees", expectedEmployees);
     function onRefreshed() {
       expect(employeesService.called("/employees")).toBe(true);
@@ -27,7 +27,7 @@ describe('Skillz', () => {
   })
 
   it('refreshes employees list when employee added', done => {
-    const expectedEmployees = [{ name: "Johnny Cash", skills: [{ name: "benefits" }] }];
+    const expectedEmployees = [{ name: "Johnny Cash", skills: [{ name: "benefits", level: "2" }] }];
     fetchMock.mock("/employees", []);
     let skillz;
     let initializing = true;
@@ -74,7 +74,7 @@ describe('Skillz', () => {
     skillz.find('button').simulate('click');
     skillz.find("AddEmployee").prop('onAdded')();
   }
-  
+
   function simulateOnError(skillz) {
     skillz.find('button').simulate('click');
     skillz.find("AddEmployee").prop('onError')();

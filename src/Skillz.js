@@ -51,7 +51,7 @@ class Skillz extends Component {
                     this.state.employees.map(employee =>
                         <li key={employee.name}>{employee.name}
                             <ul>
-                                {employee.skills.map(skill => <li key={skill.name}>{skill.name}</li>)}
+                                {employee.skills.map(skill => <li key={skill.name}>{skill.name} -> {skill.level}</li>)}
                             </ul>
                         </li>
                     )
