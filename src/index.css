@@ -16,3 +16,8 @@ code {
 .error {
   color: red;
 }
+
+.skillLine {
+  border: 1px;
+  border-color: black;
+}

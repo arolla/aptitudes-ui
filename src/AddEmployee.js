@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import EmployeeService from './EmployeeService';
 
 class AddEmployee extends Component {
@@ -62,10 +63,10 @@ class AddEmployee extends Component {
                         <label>-></label>
                         <label className="skillLevel">{skill.level}</label>
                     </p>)}
-                    <div>
+                    <div className='skillLine'>
                         <TextField name="newSkillName" label="Skill Name" onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
                         <TextField type="number" name="newSkillLevel" label="Skill Level" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />
-                        <Button id="addSkill" variant='outlined' onClick={this.addSkill}>Add skill</Button>
+                        <Button id="addSkill" variant="fab" mini aria-label="Add Skill" onClick={this.addSkill}><AddIcon /></Button>
                     </div>
                     <Button type="submit" variant='contained' color='primary'>Add</Button>
                 </form>
