@@ -89,7 +89,7 @@ function setSkillLevel(form, level) {
         .props().onChange({ target: { value: level } });
 }
 function setEmployeeName(form, name) {
-    form.find('TextField[name="newEmployeeName"]')
+    form.find('TextField[name="employeeName"]')
         .props().onChange({ target: { value: name } });
 }
 function submit(form) {

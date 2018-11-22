@@ -55,7 +55,7 @@ class AddEmployee extends Component {
             <div>
                 <p>Add employee</p>
                 <form onSubmit={this.handleSubmit}>
-                    <TextField name="newEmployeeName" label="Employee Name" onChange={this.handleNameChange}/>
+                    <TextField name="employeeName" label="Employee Name" onChange={this.handleNameChange}/>
                     {this.state.skills.map(skill => <p key={skill.name}>
                         <label className="skillName">{skill.name}</label>
                         <label>-></label>
