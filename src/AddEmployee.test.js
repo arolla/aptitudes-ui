@@ -7,7 +7,7 @@ describe('AddEmployee', () => {
     afterEach(() => {
         fetchMock.reset();
     });
-    
+
     it('starts with an empty name', () => {
         const form = shallow(<AddEmployee />);
         expect(form.state().name).toBe("");
@@ -27,21 +27,21 @@ describe('AddEmployee', () => {
         setSkillName(form, "skikill");
         setSkillLevel(form, "2");
         expect(form.find('TextField[name="newSkillName"]').prop('value')).toBe("skikill");
-        expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("2");
+        expect(form.find('TextField[name="newSkillLevel"]').prop('value')).toBe("2");
         addSkill(form);
         expect(form.find('TextField[name="newSkillName"]').prop('value')).toBe("");
-        expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("");
+        expect(form.find('TextField[name="newSkillLevel"]').prop('value')).toBe("");
     });
 
     it('creates employee on submit', done => {
         const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol", level: "2" }] };
- 
+
         const employeeService = fetchMock.post("/employees", 200);
         function onAdded() {
             expect(employeeService.lastOptions().body).toEqual(JSON.stringify(expectedEmployee));
             done();
         }
- 
+
         const form = mount(<AddEmployee onAdded={onAdded} />);
         setEmployeeName(form, "Bond");
         setSkillName(form, "alcohol");
@@ -63,7 +63,7 @@ describe('AddEmployee', () => {
         it(`rejects out of bounds skill level $level`, () => {
             const form = shallow(<AddEmployee />);
             setSkillLevel(form, level);
-            expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("");
+            expect(form.find('TextField[name="newSkillLevel"]').prop('value')).toBe("");
         });
     });
 
@@ -71,7 +71,7 @@ describe('AddEmployee', () => {
         it(`accepts valid skill level $level`, () => {
             const form = shallow(<AddEmployee />);
             setSkillLevel(form, level);
-            expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe(level);
+            expect(form.find('TextField[name="newSkillLevel"]').prop('value')).toBe(level);
         });
     });
 });
@@ -85,8 +85,8 @@ function setSkillName(form, name) {
         .props().onChange({ target: { value: name } });
 }
 function setSkillLevel(form, level) {
-    form.find('input[name="newSkillLevel"]')
-        .simulate('change', { target: { value: level } });
+    form.find('TextField[name="newSkillLevel"]')
+        .props().onChange({ target: { value: level } });
 }
 function setEmployeeName(form, name) {
     form.find('TextField[name="newEmployeeName"]')

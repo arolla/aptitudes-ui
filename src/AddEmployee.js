@@ -63,7 +63,7 @@ class AddEmployee extends Component {
                     </p>)}
                     <div>
                         <TextField name="newSkillName" label="Skill Name" onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
-                        <input type="number" name="newSkillLevel" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />
+                        <TextField type="number" name="newSkillLevel" label="Skill Level" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />
                         <button onClick={this.addSkill}>Add skill</button>
                     </div>
                     <button type="submit">Add</button>
