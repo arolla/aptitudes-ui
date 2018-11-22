@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
 import AddEmployee from './AddEmployee';
 import EmployeeService from './EmployeeService';
 
@@ -56,7 +57,7 @@ class Skillz extends Component {
                         </li>
                     )
                 }</ul>
-                <button onClick={this.createEmployee}>Do you wanna create?</button>
+                <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
                 {this.state.createEmployee
                     ? <AddEmployee onAdded={this.onEmployeeAdded} onError={this.onError} />
                     : null

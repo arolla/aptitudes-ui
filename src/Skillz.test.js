@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Button from '@material-ui/core/Button';
 import Skillz from './Skillz';
 import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
@@ -71,12 +72,12 @@ describe('Skillz', () => {
   })
 
   function simulateOnAdded(skillz) {
-    skillz.find('button').simulate('click');
+    skillz.find(Button).simulate('click');
     skillz.find("AddEmployee").prop('onAdded')();
   }
 
   function simulateOnError(skillz) {
-    skillz.find('button').simulate('click');
+    skillz.find(Button).simulate('click');
     skillz.find("AddEmployee").prop('onError')();
   }
 });

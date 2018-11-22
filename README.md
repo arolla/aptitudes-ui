@@ -46,5 +46,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 # to do
 
 * Adding twice the same employee is forbidden.
+* Adding twice the same skill to an employee is forbidden.
 * Empty names are forbidden.
 * Empty skill level is forbidden (0 by default?).

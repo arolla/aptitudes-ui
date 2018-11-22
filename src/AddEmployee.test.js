@@ -77,7 +77,7 @@ describe('AddEmployee', () => {
 });
 
 function addSkill(form) {
-    form.find('button[children="Add skill"]')
+    form.find('#addSkill').first()
         .simulate('click', { preventDefault: () => undefined });
 }
 function setSkillName(form, name) {
@@ -93,5 +93,6 @@ function setEmployeeName(form, name) {
         .props().onChange({ target: { value: name } });
 }
 function submit(form) {
-    form.find('[type="submit"]').simulate('submit', { preventDefault: () => undefined });
+    form.find('[type="submit"]').first()
+        .simulate('submit', { preventDefault: () => undefined });
 }
