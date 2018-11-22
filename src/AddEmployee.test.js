@@ -89,8 +89,8 @@ function setSkillLevel(form, level) {
         .simulate('change', { target: { value: level } });
 }
 function setEmployeeName(form, name) {
-    form.find('input[name="name"]')
-        .simulate('change', { target: { value: name } });
+    form.find('TextField')
+        .props().onChange({ target: { value: name } });
 }
 function submit(form) {
     form.find('[type="submit"]').simulate('submit', { preventDefault: () => undefined });
