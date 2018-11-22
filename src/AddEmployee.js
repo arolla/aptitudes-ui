@@ -55,14 +55,14 @@ class AddEmployee extends Component {
             <div>
                 <p>Add employee</p>
                 <form onSubmit={this.handleSubmit}>
-                    <TextField label="Name" onChange={this.handleNameChange}/>
+                    <TextField name="newEmployeeName" label="Employee Name" onChange={this.handleNameChange}/>
                     {this.state.skills.map(skill => <p key={skill.name}>
                         <label className="skillName">{skill.name}</label>
                         <label>-></label>
                         <label className="skillLevel">{skill.level}</label>
                     </p>)}
                     <div>
-                        <input type="text" name="newSkillName" onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
+                        <TextField name="newSkillName" label="Skill Name" onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
                         <input type="number" name="newSkillLevel" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />
                         <button onClick={this.addSkill}>Add skill</button>
                     </div>

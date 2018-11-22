@@ -26,10 +26,10 @@ describe('AddEmployee', () => {
         const form = shallow(<AddEmployee />);
         setSkillName(form, "skikill");
         setSkillLevel(form, "2");
-        expect(form.find('input[name="newSkillName"]').prop('value')).toBe("skikill");
+        expect(form.find('TextField[name="newSkillName"]').prop('value')).toBe("skikill");
         expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("2");
         addSkill(form);
-        expect(form.find('input[name="newSkillName"]').prop('value')).toBe("");
+        expect(form.find('TextField[name="newSkillName"]').prop('value')).toBe("");
         expect(form.find('input[name="newSkillLevel"]').prop('value')).toBe("");
     });
 
@@ -81,15 +81,15 @@ function addSkill(form) {
         .simulate('click', { preventDefault: () => undefined });
 }
 function setSkillName(form, name) {
-    form.find('input[name="newSkillName"]')
-        .simulate('change', { target: { value: name } });
+    form.find('TextField[name="newSkillName"]')
+        .props().onChange({ target: { value: name } });
 }
 function setSkillLevel(form, level) {
     form.find('input[name="newSkillLevel"]')
         .simulate('change', { target: { value: level } });
 }
 function setEmployeeName(form, name) {
-    form.find('TextField')
+    form.find('TextField[name="newEmployeeName"]')
         .props().onChange({ target: { value: name } });
 }
 function submit(form) {
