@@ -18,6 +18,10 @@ const EmployeeService = {
         })
     },
 
+    skills: async function() {
+        return fetch("/skills")
+            .then(result => result.json());
+    }
 }
 
 function handleFetchErrors(response) {

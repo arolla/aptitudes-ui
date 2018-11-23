@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import EmployeeService from './EmployeeService';
+import SkillsSuggestor from './SkillsSuggestor';
 
 class AddEmployee extends Component {
     constructor() {
@@ -24,9 +25,9 @@ class AddEmployee extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        const jsonEmployee = JSON.stringify({name: this.state.name, skills: this.state.skills});
+        const jsonEmployee = JSON.stringify({ name: this.state.name, skills: this.state.skills });
         EmployeeService.create(jsonEmployee)
-            .then(() =>  {
+            .then(() => {
                 if (this.props.onAdded)
                     this.props.onAdded();
             })
@@ -38,7 +39,7 @@ class AddEmployee extends Component {
     addSkill(event) {
         event.preventDefault();
         this.setState({
-            skills: this.state.skills.concat({name: this.state.newSkillName, level: this.state.newSkillLevel}),
+            skills: this.state.skills.concat({ name: this.state.newSkillName, level: this.state.newSkillLevel }),
             newSkillName: "",
             newSkillLevel: "",
         });
@@ -57,14 +58,14 @@ class AddEmployee extends Component {
             <div>
                 <p>Add employee</p>
                 <form onSubmit={this.handleSubmit}>
-                    <TextField name="employeeName" label="Employee Name" onChange={this.handleNameChange}/>
+                    <TextField name="employeeName" label="Employee Name" onChange={this.handleNameChange} />
                     {this.state.skills.map(skill => <p key={skill.name}>
                         <label className="skillName">{skill.name}</label>
                         <label>-></label>
                         <label className="skillLevel">{skill.level}</label>
                     </p>)}
-                    <div className='skillLine'>
-                        <TextField name="newSkillName" label="Skill Name" onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
+                    <div>
+                        <SkillsSuggestor onError={this.props.onError} onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
                         <TextField type="number" name="newSkillLevel" label="Skill Level" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />
                         <Button id="addSkill" variant="fab" mini aria-label="Add Skill" onClick={this.addSkill}><AddIcon /></Button>
                     </div>
