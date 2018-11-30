@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
-import Skillz from './Skillz';
+import Aptitudes from './Aptitudes';
 import fetchMock from 'fetch-mock';
 import { shallow } from 'enzyme';
 
-describe('Skillz', () => {
+describe('Aptitudes', () => {
   afterEach(() => {
     fetchMock.reset();
   });
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Skillz />, div);
+    ReactDOM.render(<Aptitudes />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
@@ -21,63 +21,63 @@ describe('Skillz', () => {
     const employeesService = fetchMock.mock("/employees", expectedEmployees);
     function onRefreshed() {
       expect(employeesService.called("/employees")).toBe(true);
-      expect(skillz.state().employees).toEqual(expectedEmployees);
+      expect(aptitudes.state().employees).toEqual(expectedEmployees);
       done();
     }
-    const skillz = shallow(<Skillz onRefreshed={onRefreshed} />);
+    const aptitudes = shallow(<Aptitudes onRefreshed={onRefreshed} />);
   })
 
   it('refreshes employees list when employee added', done => {
     const expectedEmployees = [{ name: "Johnny Cash", skills: [{ name: "benefits", level: "2" }] }];
     fetchMock.mock("/employees", []);
-    let skillz;
+    let aptitudes;
     let initializing = true;
     function onRefreshed() {
       if (initializing) {
         fetchMock.mock("/employees", expectedEmployees, { overwriteRoutes: true });
-        simulateOnAdded(skillz);
+        simulateOnAdded(aptitudes);
         initializing = false;
       } else {
-        expect(skillz.state().employees).toEqual(expectedEmployees);
+        expect(aptitudes.state().employees).toEqual(expectedEmployees);
         done();
       }
     }
-    skillz = shallow(<Skillz onRefreshed={onRefreshed} />);
+    aptitudes = shallow(<Aptitudes onRefreshed={onRefreshed} />);
   })
 
   it('displays message when employee created', () => {
-    const skillz = shallow(<Skillz />);
-    simulateOnAdded(skillz);
-    expect(skillz.find('.message').text()).toEqual("employee added");
+    const aptitudes = shallow(<Aptitudes />);
+    simulateOnAdded(aptitudes);
+    expect(aptitudes.find('.message').text()).toEqual("employee added");
   })
 
   it('displays error when employee creation failed', () => {
-    const skillz = shallow(<Skillz />);
-    simulateOnError(skillz);
-    expect(skillz.find('.error').text()).toMatch(/^employee creation failed.*/);
+    const aptitudes = shallow(<Aptitudes />);
+    simulateOnError(aptitudes);
+    expect(aptitudes.find('.error').text()).toMatch(/^employee creation failed.*/);
   })
 
   it('resets error on message', () => {
-    const skillz = shallow(<Skillz />);
-    simulateOnError(skillz);
-    simulateOnAdded(skillz);
-    expect(skillz.find('.error').text()).toEqual("");
+    const aptitudes = shallow(<Aptitudes />);
+    simulateOnError(aptitudes);
+    simulateOnAdded(aptitudes);
+    expect(aptitudes.find('.error').text()).toEqual("");
   })
 
   it('resets message on error', () => {
-    const skillz = shallow(<Skillz />);
-    simulateOnAdded(skillz);
-    simulateOnError(skillz);
-    expect(skillz.find('.message').text()).toEqual("");
+    const aptitudes = shallow(<Aptitudes />);
+    simulateOnAdded(aptitudes);
+    simulateOnError(aptitudes);
+    expect(aptitudes.find('.message').text()).toEqual("");
   })
 
-  function simulateOnAdded(skillz) {
-    skillz.find(Button).simulate('click');
-    skillz.find("AddEmployee").prop('onAdded')();
+  function simulateOnAdded(aptitudes) {
+    aptitudes.find(Button).simulate('click');
+    aptitudes.find("AddEmployee").prop('onAdded')();
   }
 
-  function simulateOnError(skillz) {
-    skillz.find(Button).simulate('click');
-    skillz.find("AddEmployee").prop('onError')();
+  function simulateOnError(aptitudes) {
+    aptitudes.find(Button).simulate('click');
+    aptitudes.find("AddEmployee").prop('onError')();
   }
 });

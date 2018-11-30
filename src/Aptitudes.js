@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import AddEmployee from './AddEmployee';
 import EmployeeService from './EmployeeService';
 
-class Skillz extends Component {
+class Aptitudes extends Component {
     constructor() {
         super();
         this.state = {
@@ -69,4 +69,4 @@ class Skillz extends Component {
     }
 }
 
-export default Skillz;
+export default Aptitudes;
