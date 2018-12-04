@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import AddEmployee from './AddEmployee';
 import EmployeeService from './EmployeeService';
+import { Paper } from '@material-ui/core';
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    employee: {
+        padding: theme.spacing.unit * 2,
+        height:'150px',
+        width: '150px',
+    },
+})
+
 
 class Aptitudes extends Component {
     constructor() {
@@ -10,7 +26,7 @@ class Aptitudes extends Component {
             employees: [],
             createEmployee: false,
             message: "",
-            error:"",
+            error: "",
         };
         this.createEmployee = this.createEmployee.bind(this);
         this.onEmployeeAdded = this.onEmployeeAdded.bind(this);
@@ -31,7 +47,7 @@ class Aptitudes extends Component {
         this.setState({ createEmployee: true });
     }
     onEmployeeAdded() {
-        this.setState({ 
+        this.setState({
             createEmployee: false,
             message: "employee added",
             error: "",
@@ -45,28 +61,28 @@ class Aptitudes extends Component {
         });
     }
     render() {
+        const { employees, message, error } = this.state;
+        const { classes } = this.props;
         return (
             <div>
-                <h1>employees:</h1>
-                <ul>{
-                    this.state.employees.map(employee =>
-                        <li key={employee.name}>{employee.name}
-                            <ul>
-                                {employee.skills.map(skill => <li key={skill.name}>{skill.name} -> {skill.level}</li>)}
-                            </ul>
-                        </li>
-                    )
-                }</ul>
+                <Grid container direction='row' className={classes.root} spacing={8}>
+                    {employees.map(employee => <Grid item key={employee.name} style={{height:'100%'}}><Paper className={classes.employee}>
+                        <Typography variant="h5" component="h1">{employee.name}</Typography>
+                        {employee.skills.map(skill => {
+                            return <Typography key={skill.name}>{skill.name}->{skill.level}</Typography>
+                        })}
+                    </Paper></Grid>)}
+                </Grid>
                 <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
                 {this.state.createEmployee
                     ? <AddEmployee onAdded={this.onEmployeeAdded} onError={this.onError} />
                     : null
                 }
-                <p className='message'>{this.state.message}</p>
-                <p className='error'>{this.state.error}</p>
+                <p className='message'>{message}</p>
+                <p className='error'>{error}</p>
             </div>
         );
     }
 }
 
-export default Aptitudes;
+export default withStyles(styles)(Aptitudes);

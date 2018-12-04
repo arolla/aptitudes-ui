@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
 import Aptitudes from './Aptitudes';
 import fetchMock from 'fetch-mock';
-import { shallow } from 'enzyme';
+import { createShallow } from '@material-ui/core/test-utils';
 
 describe('Aptitudes', () => {
+  let shallow;
+  beforeEach(() => {
+    shallow = createShallow({ dive: true });
+  });
+
   afterEach(() => {
     fetchMock.reset();
   });
@@ -72,12 +76,16 @@ describe('Aptitudes', () => {
   })
 
   function simulateOnAdded(aptitudes) {
-    aptitudes.find(Button).simulate('click');
+    displayAddEmployee(aptitudes);
     aptitudes.find("AddEmployee").prop('onAdded')();
   }
 
   function simulateOnError(aptitudes) {
-    aptitudes.find(Button).simulate('click');
+    displayAddEmployee(aptitudes);
     aptitudes.find("AddEmployee").prop('onError')();
+  }
+
+  function displayAddEmployee(aptitudes) {
+    aptitudes.instance().createEmployee();
   }
 });
