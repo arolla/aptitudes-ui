@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Paper } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
     employee: {
         padding: theme.spacing.unit * 2,
-        height:'150px',
-        width: '150px',
+        height:'100%',
+        width: '100%',
+        'box-sizing': 'border-box',
    },
 });
 

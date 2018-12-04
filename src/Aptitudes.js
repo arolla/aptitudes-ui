@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import AddEmployee from './AddEmployee';
@@ -10,6 +10,10 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
+    employee: {
+        height: '150px',
+        width: '150px',
+    }
 })
 
 class Aptitudes extends Component {
@@ -59,7 +63,7 @@ class Aptitudes extends Component {
         return (
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
-                    {employees.map(employee => <Grid item key={employee.name}><Employee employee={employee} /></Grid>)}
+                    {employees.map(employee => <Grid item key={employee.name} className={classes.employee}><Employee employee={employee} /></Grid>)}
                 </Grid>
                 <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
                 {this.state.createEmployee
