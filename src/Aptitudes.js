@@ -2,22 +2,15 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import AddEmployee from './AddEmployee';
+import Employee from './Employee';
 import EmployeeService from './EmployeeService';
-import { Paper } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-    employee: {
-        padding: theme.spacing.unit * 2,
-        height:'150px',
-        width: '150px',
-    },
 })
-
 
 class Aptitudes extends Component {
     constructor() {
@@ -66,12 +59,7 @@ class Aptitudes extends Component {
         return (
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
-                    {employees.map(employee => <Grid item key={employee.name} style={{height:'100%'}}><Paper className={classes.employee}>
-                        <Typography variant="h5" component="h1">{employee.name}</Typography>
-                        {employee.skills.map(skill => {
-                            return <Typography key={skill.name}>{skill.name}->{skill.level}</Typography>
-                        })}
-                    </Paper></Grid>)}
+                    {employees.map(employee => <Grid item key={employee.name}><Employee employee={employee} /></Grid>)}
                 </Grid>
                 <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
                 {this.state.createEmployee

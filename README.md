@@ -45,6 +45,10 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # to do
 
+* Search employee by name or skill.
+* Manage employee card overflow (scroll bar, ellipsis...).
+* Delete employee.
+* Inline employee modification.
 * Adding twice the same employee is forbidden.
 * Adding twice the same skill to an employee is forbidden.
 * Empty names are forbidden.
