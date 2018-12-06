@@ -1,9 +1,9 @@
 import React from 'react';
-import AddEmployee from './AddEmployee';
+import CreateEmployee from './CreateEmployee';
 import { shallow, mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
 
-describe('AddEmployee', () => {
+describe('CreateEmployee', () => {
     beforeEach(() => {
         fetchMock.get("/skills", []);
     })
@@ -12,12 +12,12 @@ describe('AddEmployee', () => {
     });
 
     it('starts with an empty name', () => {
-        const form = shallow(<AddEmployee />);
+        const form = shallow(<CreateEmployee />);
         expect(form.state().name).toBe("");
     });
 
     it('adds skill', () => {
-        const form = shallow(<AddEmployee />);
+        const form = shallow(<CreateEmployee />);
         setNewSkillName(form, "skikill");
         setNewSkillLevel(form, "1");
         addSkill(form);
@@ -26,7 +26,7 @@ describe('AddEmployee', () => {
     });
 
     it('resets newSkillName when added', () => {
-        const form = shallow(<AddEmployee />);
+        const form = shallow(<CreateEmployee />);
         setNewSkillName(form, "skikill");
         setNewSkillLevel(form, "2");
         expect(getNewSkillName(form)).toBe("skikill");
@@ -40,12 +40,12 @@ describe('AddEmployee', () => {
         const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol", level: "2" }] };
 
         const employeeService = fetchMock.post("/employees", 200);
-        function onAdded() {
+        function onCreated() {
             expect(employeeService.lastOptions().body).toEqual(JSON.stringify(expectedEmployee));
             done();
         }
 
-        const form = mount(<AddEmployee onAdded={onAdded} />);
+        const form = mount(<CreateEmployee onCreated={onCreated} />);
         setEmployeeName(form, "Bond");
         setNewSkillName(form, "alcohol");
         setNewSkillLevel(form, "2");
@@ -58,13 +58,13 @@ describe('AddEmployee', () => {
         function onError() {
             done();
         }
-        const form = mount(<AddEmployee onError={onError} />);
+        const form = mount(<CreateEmployee onError={onError} />);
         submit(form);
     });
 
     [-1, 4].forEach(level => {
         it(`rejects out of bounds skill level $level`, () => {
-            const form = shallow(<AddEmployee />);
+            const form = shallow(<CreateEmployee />);
             setNewSkillLevel(form, level);
             expect(getNewSkillLevel(form)).toBe("");
         });
@@ -72,7 +72,7 @@ describe('AddEmployee', () => {
 
     [0, 1, 2, 3].forEach(level => {
         it(`accepts valid skill level $level`, () => {
-            const form = shallow(<AddEmployee />);
+            const form = shallow(<CreateEmployee />);
             setNewSkillLevel(form, level);
             expect(getNewSkillLevel(form)).toBe(level);
         });

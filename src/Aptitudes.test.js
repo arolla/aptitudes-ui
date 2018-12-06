@@ -39,7 +39,7 @@ describe('Aptitudes', () => {
     function onRefreshed() {
       if (initializing) {
         fetchMock.mock("/employees", expectedEmployees, { overwriteRoutes: true });
-        simulateOnAdded(aptitudes);
+        simulateonCreated(aptitudes);
         initializing = false;
       } else {
         expect(aptitudes.state().employees).toEqual(expectedEmployees);
@@ -51,7 +51,7 @@ describe('Aptitudes', () => {
 
   it('displays message when employee created', () => {
     const aptitudes = shallow(<Aptitudes />);
-    simulateOnAdded(aptitudes);
+    simulateonCreated(aptitudes);
     expect(aptitudes.find('.message').text()).toEqual("employee added");
   })
 
@@ -64,28 +64,28 @@ describe('Aptitudes', () => {
   it('resets error on message', () => {
     const aptitudes = shallow(<Aptitudes />);
     simulateOnError(aptitudes);
-    simulateOnAdded(aptitudes);
+    simulateonCreated(aptitudes);
     expect(aptitudes.find('.error').text()).toEqual("");
   })
 
   it('resets message on error', () => {
     const aptitudes = shallow(<Aptitudes />);
-    simulateOnAdded(aptitudes);
+    simulateonCreated(aptitudes);
     simulateOnError(aptitudes);
     expect(aptitudes.find('.message').text()).toEqual("");
   })
 
-  function simulateOnAdded(aptitudes) {
-    displayAddEmployee(aptitudes);
-    aptitudes.find("AddEmployee").prop('onAdded')();
+  function simulateonCreated(aptitudes) {
+    displayCreateEmployee(aptitudes);
+    aptitudes.find("CreateEmployee").prop('onCreated')();
   }
 
   function simulateOnError(aptitudes) {
-    displayAddEmployee(aptitudes);
-    aptitudes.find("AddEmployee").prop('onError')();
+    displayCreateEmployee(aptitudes);
+    aptitudes.find("CreateEmployee").prop('onError')();
   }
 
-  function displayAddEmployee(aptitudes) {
+  function displayCreateEmployee(aptitudes) {
     aptitudes.instance().createEmployee();
   }
 });

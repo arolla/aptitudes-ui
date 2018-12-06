@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import AddEmployee from './AddEmployee';
+import CreateEmployee from './CreateEmployee';
 import Employee from './Employee';
 import EmployeeService from './EmployeeService';
 
@@ -26,7 +26,7 @@ class Aptitudes extends Component {
             error: "",
         };
         this.createEmployee = this.createEmployee.bind(this);
-        this.onEmployeeAdded = this.onEmployeeAdded.bind(this);
+        this.onEmployeeCreated = this.onEmployeeCreated.bind(this);
         this.onError = this.onError.bind(this);
     }
     componentDidMount() {
@@ -43,7 +43,7 @@ class Aptitudes extends Component {
     createEmployee() {
         this.setState({ createEmployee: true });
     }
-    onEmployeeAdded() {
+    onEmployeeCreated() {
         this.setState({
             createEmployee: false,
             message: "employee added",
@@ -67,7 +67,7 @@ class Aptitudes extends Component {
                 </Grid>
                 <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
                 {this.state.createEmployee
-                    ? <AddEmployee onAdded={this.onEmployeeAdded} onError={this.onError} />
+                    ? <CreateEmployee onCreated={this.onEmployeeCreated} onError={this.onError} />
                     : null
                 }
                 <p className='message'>{message}</p>

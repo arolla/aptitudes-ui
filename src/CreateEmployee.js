@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EmployeeService from './EmployeeService';
 import SkillsSuggestor from './SkillsSuggestor';
 
-class AddEmployee extends Component {
+class CreateEmployee extends Component {
     constructor() {
         super();
         this.state = {
@@ -28,8 +28,8 @@ class AddEmployee extends Component {
         const jsonEmployee = JSON.stringify({ name: this.state.name, skills: this.state.skills });
         EmployeeService.create(jsonEmployee)
             .then(() => {
-                if (this.props.onAdded)
-                    this.props.onAdded();
+                if (this.props.onCreated)
+                    this.props.onCreated();
             })
             .catch(err => {
                 if (this.props.onError)
@@ -76,4 +76,4 @@ class AddEmployee extends Component {
     }
 }
 
-export default AddEmployee;
+export default CreateEmployee;
