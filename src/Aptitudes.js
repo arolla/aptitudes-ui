@@ -6,7 +6,7 @@ import AddEmployee from './AddEmployee';
 import Employee from './Employee';
 import EmployeeService from './EmployeeService';
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         flexGrow: 1,
     },

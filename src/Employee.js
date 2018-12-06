@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
     employee: {
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing.unit,
         height:'100%',
         width: '100%',
         'box-sizing': 'border-box',
