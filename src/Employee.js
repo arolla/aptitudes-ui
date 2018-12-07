@@ -1,48 +1,76 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Card } from '@material-ui/core';
-import { CardContent } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import { Card, CardContent, CardActions } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = () => ({
     employee: {
-        height:'100%',
+        height: '100%',
         width: '100%',
         'box-sizing': 'border-box',
-    },
-    controls: {
         display: 'flex',
-        alignItems: 'center',
-        paddingLeft: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
-        bottom: '0',
-   },
+        'flex-direction': 'column',
+    },
+    actions: {
+        width: '100%',
+        display: 'flex',
+        'justify-content': 'right',
+        'margin-top': 'auto',
+        'padding-right': 0,
+    },
 });
 
 class Employee extends Component {
     constructor() {
         super();
+        this.state = {
+            readOnly: true,
+        }
         this.onDelete = this.onDelete.bind(this);
+        this.onEdit = this.onEdit.bind(this);
+        this.onDone = this.onDone.bind(this);
+        this.onNameChange = this.onNameChange.bind(this);
     }
     onDelete() {
         this.props.onDelete(this.props.employee);
     }
+    onEdit() {
+        this.setState({ readOnly: false });
+    }
+    onDone() {
+        this.setState({ readOnly: true });
+        this.props.onChange(this.props.employee);
+    }
+    onNameChange(event) {
+        this.props.employee.name = event.target.value;
+    }
     render() {
         const { employee, classes } = this.props;
+        const { readOnly } = this.state;
         return (
-            <Card className={classes.employee}><div>
+            <Card className={classes.employee}>
                 <CardContent>
-                    <Typography variant="h5" component="h1">{employee.name}</Typography>
+                    {readOnly
+                        ? <Typography variant="h5" component="h1">{employee.name}</Typography>
+                        : <Input placeholder={employee.name} onChange={this.onNameChange}></Input>
+                    }
                     {employee.skills.map(skill => {
                         return <Typography key={skill.name}>{skill.name}->{skill.level}</Typography>
                     })}
                 </CardContent>
-                <div className={classes.controls}>
-                    <Button variant='fab' mini color='secondary' aria-label="Delete" onClick={this.onDelete}><DeleteIcon /></Button>
-                </div>
-            </div></Card>
+                <CardActions className={classes.actions}>
+                    <IconButton color='secondary' aria-label="Delete" onClick={this.onDelete}><DeleteIcon /></IconButton>
+                    {readOnly
+                        ? <IconButton aria-label="Edit" onClick={this.onEdit}><EditIcon /></IconButton>
+                        : <IconButton aria-label="Done" onClick={this.onDone}><CheckIcon /></IconButton>
+                    }
+                </CardActions>
+            </Card>
         )
     }
 }

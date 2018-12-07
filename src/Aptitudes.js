@@ -11,8 +11,8 @@ const styles = () => ({
         flexGrow: 1,
     },
     employee: {
-        height: '150px',
-        width: '150px',
+        height: '200px',
+        width: '200px',
     }
 })
 
@@ -21,7 +21,7 @@ class Aptitudes extends Component {
         super();
         this.state = {
             employees: [],
-            createEmployee: false,
+            creatingEmployee: false,
             message: "",
             error: "",
         };
@@ -42,11 +42,11 @@ class Aptitudes extends Component {
             });
     }
     createEmployee() {
-        this.setState({ createEmployee: true });
+        this.setState({ creatingEmployee: true });
     }
     onEmployeeCreated() {
         this.setState({
-            createEmployee: false,
+            creatingEmployee: false,
             message: "employee added",
             error: "",
         });
@@ -55,7 +55,7 @@ class Aptitudes extends Component {
     onEmployeeDeletionRequested(employee) {
         EmployeeService.delete(employee)
             .then(() => {
-                this.setState({ 
+                this.setState({
                     message: "employee " + employee.name + " deleted",
                     error: "",
                 })
@@ -76,6 +76,13 @@ class Aptitudes extends Component {
             message: "",
         });
     }
+    onEmployeeChanged = oldEmployee => newEmployee => {
+        this.setState({
+            message: "employee " + oldEmployee.name + " updated to " + JSON.stringify(newEmployee),
+            error: "",
+        })
+    }
+
     render() {
         const { employees, message, error } = this.state;
         const { classes } = this.props;
@@ -83,11 +90,14 @@ class Aptitudes extends Component {
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
                     {employees.map(employee => <Grid item key={employee.name} className={classes.employee}>
-                        <Employee employee={employee} onDelete={this.onEmployeeDeletionRequested}/>
+                        <Employee employee={employee} 
+                            onDelete={this.onEmployeeDeletionRequested} 
+                            onChange={this.onEmployeeChanged(clone(employee))} 
+                        />
                     </Grid>)}
                 </Grid>
                 <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
-                {this.state.createEmployee
+                {this.state.creatingEmployee
                     ? <CreateEmployee onCreated={this.onEmployeeCreated} onError={this.onError} />
                     : null
                 }
@@ -97,5 +107,7 @@ class Aptitudes extends Component {
         );
     }
 }
+
+const clone = source => Object.assign({}, source);
 
 export default withStyles(styles)(Aptitudes);
