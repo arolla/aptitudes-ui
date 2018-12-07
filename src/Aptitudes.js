@@ -28,6 +28,7 @@ class Aptitudes extends Component {
         this.createEmployee = this.createEmployee.bind(this);
         this.onEmployeeCreated = this.onEmployeeCreated.bind(this);
         this.onError = this.onError.bind(this);
+        this.onEmployeeDeletionRequested = this.onEmployeeDeletionRequested.bind(this);
     }
     componentDidMount() {
         this.loadEmployees();
@@ -51,6 +52,24 @@ class Aptitudes extends Component {
         });
         this.loadEmployees();
     }
+    onEmployeeDeletionRequested(employee) {
+        EmployeeService.delete(employee)
+            .then(() => {
+                this.setState({ 
+                    message: "employee " + employee.name + " deleted",
+                    error: "",
+                })
+            })
+            .then(() => {
+                this.loadEmployees();
+            })
+            .catch(error => {
+                this.setState({
+                    error: "employee deletion failed: " + error,
+                    message: "",
+                })
+            });
+    }
     onError(error) {
         this.setState({
             error: "employee creation failed: " + error,
@@ -63,7 +82,9 @@ class Aptitudes extends Component {
         return (
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
-                    {employees.map(employee => <Grid item key={employee.name} className={classes.employee}><Employee employee={employee} /></Grid>)}
+                    {employees.map(employee => <Grid item key={employee.name} className={classes.employee}>
+                        <Employee employee={employee} onDelete={this.onEmployeeDeletionRequested}/>
+                    </Grid>)}
                 </Grid>
                 <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
                 {this.state.createEmployee

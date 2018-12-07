@@ -21,7 +21,17 @@ const EmployeeService = {
     skills: async function() {
         return fetch("/skills")
             .then(result => result.json());
-    }
+    },
+
+    delete: async function(employee) {
+        return fetch("/employees/" + employee.name, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            handleFetchErrors(response);
+            response.json();
+        });
+    },
 }
 
 function handleFetchErrors(response) {
