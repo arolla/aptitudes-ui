@@ -37,11 +37,11 @@ describe('CreateEmployee', () => {
     });
 
     it('creates employee on submit', done => {
-        const expectedEmployee = { name: "Bond", skills: [{ name: "alcohol", level: "2" }] };
+        const expectedEmployee = /{"id":".*","name":"Bond","skills":\[{"name":"alcohol","level":"2"}\]}/;
 
         const employeeService = fetchMock.post("/employees", 200);
         function onCreated() {
-            expect(employeeService.lastOptions().body).toEqual(JSON.stringify(expectedEmployee));
+            expect(employeeService.lastOptions().body).toMatch(expectedEmployee);
             done();
         }
 

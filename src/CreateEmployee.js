@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import EmployeeService from './EmployeeService';
 import SkillsSuggestor from './SkillsSuggestor';
+import uuidv4 from 'uuid/v4'
 
 class CreateEmployee extends Component {
     constructor() {
@@ -25,7 +26,7 @@ class CreateEmployee extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        const jsonEmployee = JSON.stringify({ name: this.state.name, skills: this.state.skills });
+        const jsonEmployee = JSON.stringify({ id: uuidv4(), name: this.state.name, skills: this.state.skills });
         EmployeeService.create(jsonEmployee)
             .then(() => {
                 if (this.props.onCreated)
