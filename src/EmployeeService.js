@@ -29,7 +29,6 @@ const EmployeeService = {
         })
         .then(response => {
             handleFetchErrors(response);
-            response.json();
         });
     },
 }

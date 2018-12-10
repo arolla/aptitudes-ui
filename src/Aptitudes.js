@@ -55,32 +55,32 @@ class Aptitudes extends Component {
     onEmployeeDeletionRequested(employee) {
         EmployeeService.delete(employee)
             .then(() => {
-                this.setState({
-                    message: "employee " + employee.name + " deleted",
-                    error: "",
-                })
+                this.message("employee " + employee.name + " deleted");
             })
             .then(() => {
                 this.loadEmployees();
             })
             .catch(error => {
-                this.setState({
-                    error: "employee deletion failed: " + error,
-                    message: "",
-                })
+                this.message("employee deletion failed: " + error);
             });
     }
     onError(error) {
-        this.setState({
-            error: "employee creation failed: " + error,
-            message: "",
-        });
+        this.error("employee creation failed: " + error);
     }
     onEmployeeChanged = oldEmployee => newEmployee => {
+        this.message("employee " + oldEmployee.name + " updated to " + JSON.stringify(newEmployee));
+    }
+    message(message) {
         this.setState({
-            message: "employee " + oldEmployee.name + " updated to " + JSON.stringify(newEmployee),
+            message: message,
             error: "",
         })
+    }
+    error(error) {
+        this.setState({
+            error: error,
+            message: "",
+        });
     }
 
     render() {
@@ -90,9 +90,9 @@ class Aptitudes extends Component {
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
                     {employees.map(employee => <Grid item key={employee.name} className={classes.employee}>
-                        <Employee employee={employee} 
-                            onDelete={this.onEmployeeDeletionRequested} 
-                            onChange={this.onEmployeeChanged(clone(employee))} 
+                        <Employee employee={employee}
+                            onDelete={this.onEmployeeDeletionRequested}
+                            onChange={this.onEmployeeChanged(clone(employee))}
                         />
                     </Grid>)}
                 </Grid>

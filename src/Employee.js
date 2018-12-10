@@ -33,7 +33,7 @@ class Employee extends Component {
         }
         this.onDelete = this.onDelete.bind(this);
         this.onEdit = this.onEdit.bind(this);
-        this.onDone = this.onDone.bind(this);
+        this.onEditionDone = this.onEditionDone.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
     }
     onDelete() {
@@ -42,7 +42,7 @@ class Employee extends Component {
     onEdit() {
         this.setState({ readOnly: false });
     }
-    onDone() {
+    onEditionDone() {
         this.setState({ readOnly: true });
         this.props.onChange(this.props.employee);
     }
@@ -67,7 +67,7 @@ class Employee extends Component {
                     <IconButton color='secondary' aria-label="Delete" onClick={this.onDelete}><DeleteIcon /></IconButton>
                     {readOnly
                         ? <IconButton aria-label="Edit" onClick={this.onEdit}><EditIcon /></IconButton>
-                        : <IconButton aria-label="Done" onClick={this.onDone}><CheckIcon /></IconButton>
+                        : <IconButton aria-label="Done" onClick={this.onEditionDone}><CheckIcon /></IconButton>
                     }
                 </CardActions>
             </Card>
