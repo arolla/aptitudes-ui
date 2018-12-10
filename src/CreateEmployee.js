@@ -26,7 +26,7 @@ class CreateEmployee extends Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        const jsonEmployee = JSON.stringify({ id: uuidv4(), name: this.state.name, skills: this.state.skills });
+        const jsonEmployee = { id: uuidv4(), name: this.state.name, skills: this.state.skills };
         EmployeeService.create(jsonEmployee)
             .then(() => {
                 if (this.props.onCreated)

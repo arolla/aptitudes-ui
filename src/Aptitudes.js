@@ -57,18 +57,28 @@ class Aptitudes extends Component {
             .then(() => {
                 this.message("employee " + employee.name + " deleted");
             })
-            .then(() => {
-                this.loadEmployees();
-            })
             .catch(error => {
-                this.message("employee deletion failed: " + error);
+                this.error("employee deletion failed: " + error);
+            })
+            .finally(() => {
+                this.loadEmployees();
             });
     }
     onError(error) {
         this.error("employee creation failed: " + error);
     }
     onEmployeeChanged = oldEmployee => newEmployee => {
-        this.message("employee " + oldEmployee.name + " updated to " + JSON.stringify(newEmployee));
+        EmployeeService.update(newEmployee)
+            .then(() => {
+                this.message("employee " + oldEmployee.name + " updated to " + JSON.stringify(newEmployee));
+            })
+            .catch(error => {
+                this.error("employee update failed: " + error);
+            })
+            .finally(() => {
+                this.loadEmployees();
+            })
+;
     }
     message(message) {
         this.setState({
