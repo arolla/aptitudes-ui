@@ -24,7 +24,7 @@ const EmployeeService = {
     },
 
     delete: async function(employee) {
-        return fetch("/employees/" + employee.name, {
+        return fetch("/employees/" + employee.id, {
             method: 'DELETE',
         })
         .then(response => {
