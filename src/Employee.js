@@ -57,6 +57,9 @@ class Employee extends Component {
     onNameChange(event) {
         this.props.employee.name = event.target.value;
     }
+    onLevelChange = oldSkill => event => {
+        oldSkill.level = event.target.value;
+    }
     render() {
         const { employee, classes } = this.props;
         const { readOnly } = this.state;
@@ -71,7 +74,13 @@ class Employee extends Component {
                         <Table>
                             {employee.skills.map(skill => <TableRow>
                                 <TableCell>{skill.name}</TableCell>
-                                <TableCell numeric>{skill.level}</TableCell>
+                                {readOnly
+                                    ? <TableCell numeric>{skill.level}</TableCell>
+                                    : <TableCell><Input type='number' 
+                                        inputProps={{min: 0, max: 3}} defaultValue={skill.level} 
+                                        onChange={this.onLevelChange(skill)}>
+                                    </Input></TableCell>
+                                }
                             </TableRow>)}
                         </Table>
                     </div>
