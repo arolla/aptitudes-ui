@@ -11,8 +11,8 @@ const styles = () => ({
         flexGrow: 1,
     },
     employee: {
-        height: '200px',
-        width: '200px',
+        height: '300px',
+        width: '300px'
     }
 })
 
@@ -77,8 +77,7 @@ class Aptitudes extends Component {
             })
             .finally(() => {
                 this.loadEmployees();
-            })
-;
+            });
     }
     message(message) {
         this.setState({
@@ -99,7 +98,7 @@ class Aptitudes extends Component {
         return (
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
-                    {employees.map(employee => <Grid item key={employee.name} className={classes.employee}>
+                    {employees.map(employee => <Grid key={employee.name} className={classes.employee}>
                         <Employee employee={employee}
                             onDelete={this.onEmployeeDeletionRequested}
                             onChange={this.onEmployeeChanged(clone(employee))}

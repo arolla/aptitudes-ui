@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { Card, CardContent, CardActions } from '@material-ui/core';
-import Input from '@material-ui/core/Input';
-import IconButton from '@material-ui/core/Button';
+import { Card, CardContent, CardActions, Table, TableRow, TableCell, Input, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
@@ -14,7 +12,17 @@ const styles = () => ({
         width: '100%',
         'box-sizing': 'border-box',
         display: 'flex',
+        flex: '1 1 auto',
         'flex-direction': 'column',
+    },
+    cardContent: {
+        height: '100%',
+        minHeight: 0,
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    skillsListContainer: {
+        overflowY: 'auto'
     },
     actions: {
         width: '100%',
@@ -54,14 +62,19 @@ class Employee extends Component {
         const { readOnly } = this.state;
         return (
             <Card className={classes.employee}>
-                <CardContent>
+                <CardContent className={classes.cardContent}>
                     {readOnly
                         ? <Typography variant="h5" component="h1">{employee.name}</Typography>
                         : <Input placeholder={employee.name} onChange={this.onNameChange}></Input>
                     }
-                    {employee.skills.map(skill => {
-                        return <Typography key={skill.name}>{skill.name}->{skill.level}</Typography>
-                    })}
+                    <div className={classes.skillsListContainer}>
+                        <Table>
+                            {employee.skills.map(skill => <TableRow>
+                                <TableCell>{skill.name}</TableCell>
+                                <TableCell numeric>{skill.level}</TableCell>
+                            </TableRow>)}
+                        </Table>
+                    </div>
                 </CardContent>
                 <CardActions className={classes.actions}>
                     <IconButton color='secondary' aria-label="Delete" onClick={this.onDelete}><DeleteIcon /></IconButton>
