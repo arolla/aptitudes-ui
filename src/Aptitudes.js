@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import CreateEmployee from './CreateEmployee';
@@ -19,8 +20,6 @@ class Aptitudes extends Component {
         this.state = {
             employees: [],
             creatingEmployee: false,
-            message: "",
-            error: "",
         };
         this.createEmployee = this.createEmployee.bind(this);
         this.onEmployeeCreated = this.onEmployeeCreated.bind(this);
@@ -42,11 +41,8 @@ class Aptitudes extends Component {
         this.setState({ creatingEmployee: true });
     }
     onEmployeeCreated() {
-        this.setState({
-            creatingEmployee: false,
-            message: "employee added",
-            error: "",
-        });
+        this.setState({ creatingEmployee: false });
+        this.message("employee added");
         this.loadEmployees();
     }
     onEmployeeDeletionRequested(employee) {
@@ -77,16 +73,10 @@ class Aptitudes extends Component {
             });
     }
     message(message) {
-        this.setState({
-            message: message,
-            error: "",
-        })
+        this.props.enqueueSnackbar(message, { variant: 'info' });
     }
     error(error) {
-        this.setState({
-            error: error,
-            message: "",
-        });
+        this.props.enqueueSnackbar(error, { variant: 'error' });
     }
 
     render() {
@@ -107,8 +97,6 @@ class Aptitudes extends Component {
                     ? <CreateEmployee onCreated={this.onEmployeeCreated} onError={this.onError} />
                     : null
                 }
-                <p className='message'>{message}</p>
-                <p className='error'>{error}</p>
             </div>
         );
     }
@@ -116,4 +104,4 @@ class Aptitudes extends Component {
 
 const clone = source => Object.assign({}, source);
 
-export default withStyles(styles)(Aptitudes);
+export default withStyles(styles)(withSnackbar(Aptitudes));
