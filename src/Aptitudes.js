@@ -7,9 +7,6 @@ import Employee from './Employee';
 import EmployeeService from './EmployeeService';
 
 const styles = () => ({
-    root: {
-        flexGrow: 1,
-    },
     employee: {
         height: '300px',
         width: '300px'
