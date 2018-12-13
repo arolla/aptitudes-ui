@@ -21,6 +21,12 @@ class CreateEmployee extends Component {
         this.handleNewSkillLevelChange = this.handleNewSkillLevelChange.bind(this);
         this.addSkill = this.addSkill.bind(this);
     }
+    componentDidMount() {
+        EmployeeService.skills()
+            .then(skillsSuggestions => this.setState({ skillsSuggestions }))
+            .catch(err => this.props.onError(err));
+    }
+
     handleNameChange(event) {
         this.setState({ name: event.target.value });
     }
@@ -66,7 +72,7 @@ class CreateEmployee extends Component {
                         <label className="skillLevel">{skill.level}</label>
                     </p>)}
                     <div>
-                        <SkillsSuggestor onError={this.props.onError} onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
+                        <SkillsSuggestor skills={this.state.skillsSuggestions} onError={this.props.onError} onChange={this.handleNewSkillNameChange} value={this.state.newSkillName} />
                         <TextField type="number" name="newSkillLevel" label="Skill Level" onChange={this.handleNewSkillLevelChange} value={this.state.newSkillLevel} />
                         <Button id="addSkill" variant="fab" mini aria-label="Add Skill" onClick={this.addSkill}><AddIcon /></Button>
                     </div>

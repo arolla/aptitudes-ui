@@ -4,7 +4,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
+import EmployeeService from './EmployeeService';
 import { withStyles } from '@material-ui/core/styles';
+import SkillsSuggestor from './SkillsSuggestor';
 
 const styles = () => ({
     employee: {
@@ -46,11 +48,20 @@ const styles = () => ({
 class EditEmployee extends Component {
     constructor() {
         super();
+        this.state = {
+            skills: [],
+        }
         this.onDone = this.onDone.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
         this.onAddSkill = this.onAddSkill.bind(this);
     }
+    componentDidMount() {
+        EmployeeService.skills()
+            .then(skills => this.setState({ skills }))
+            .catch(err => this.props.onError(err));
+    }
+
     onDone() {
         this.props.onChange(this.props.employee);
         this.props.onClose();
@@ -87,7 +98,12 @@ class EditEmployee extends Component {
                             {employee.skills.map(skill =>
                                 <Grid item key={skill.name} className={classes.skillItem}><Grid container direction='row' alignItems='center' justify='flex-end' spacing={16} wrap='nowrap'>
                                     <Grid item className={classes.skillName}>
-                                        <Input placeholder={skill.name} onChange={this.onSkillNameChange(skill)}/>
+                                        <SkillsSuggestor 
+                                            placeholder={skill.name} 
+                                            skills={this.state.skills} 
+                                            onError={this.props.onError} 
+                                            onChange={this.onSkillNameChange}
+                                        />
                                     </Grid>
                                     <Grid item><Input type='number' className={classes.skillLevel}
                                         inputProps={{ min: 0, max: 3 }} defaultValue={skill.level}

@@ -80,7 +80,7 @@ class Aptitudes extends Component {
     }
 
     render() {
-        const { employees, message, error } = this.state;
+        const { employees } = this.state;
         const { classes } = this.props;
         return (
             <div>
@@ -89,6 +89,7 @@ class Aptitudes extends Component {
                         <Employee employee={employee}
                             onDelete={this.onEmployeeDeletionRequested}
                             onChange={this.onEmployeeChanged(clone(employee))}
+                            onError={this.onError}
                         />
                     </Grid>)}
                 </Grid>
