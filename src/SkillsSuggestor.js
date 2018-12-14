@@ -38,7 +38,7 @@ class SkillsSuggestor extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, previousState) {
-        if (nextProps.value == '')
+        if (nextProps.value === '')
             return { value: '' };
         else
             return null;

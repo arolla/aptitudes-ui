@@ -99,6 +99,8 @@ class Aptitudes extends Component {
             });
     }
     onFilterSkillAdded() {
+        if (this.state.editedFilterSkill === '')
+            return;
         this.setState(state => {
             return {
                 filterSkills: state.filterSkills.concat(state.editedFilterSkill),
@@ -110,7 +112,7 @@ class Aptitudes extends Component {
     onFilterSkillDeleted = (skillToDelete) => () => {
         this.setState(state => {
             return {
-                filterSkills: state.filterSkills.filter(skill => skill != skillToDelete),
+                filterSkills: state.filterSkills.filter(skill => skill !== skillToDelete),
             }
         });
         this.filter();
@@ -120,8 +122,11 @@ class Aptitudes extends Component {
     }
     filter() {
         this.setState(state => {
-            if (state.filterSkills.length)
-                return { filteredEmployees: state.employees.filter(employee => employee.skills.some(skill => state.filterSkills.indexOf(skill.name) >= 0)) }
+            if (state.filterSkills.length) {
+                const newFilteredEmployees = state.employees
+                    .filter(employee => containsOne(employee.skills, state.filterSkills))
+                return { filteredEmployees: newFilteredEmployees }
+            }
             else
                 return { filteredEmployees: state.employees };
         });
@@ -179,6 +184,7 @@ class Aptitudes extends Component {
     }
 }
 
+const containsOne = (array1, array2) => array1.some(item => array2.indexOf(item.name) >= 0);
 const clone = source => Object.assign({}, source);
 
 export default withStyles(styles)(withSnackbar(Aptitudes));
