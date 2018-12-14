@@ -84,7 +84,7 @@ class EditEmployee extends Component {
         this.forceUpdate();
     }
     onAddSkill() {
-        this.props.employee.skills.push({name: "", level: 0});
+        this.props.employee.skills.push({ name: "", level: 0 });
         this.forceUpdate();
     }
     render() {
@@ -92,22 +92,22 @@ class EditEmployee extends Component {
         return (
             <Card className={classes.employee}>
                 <CardContent className={classes.cardContent}>
-                    <Input placeholder={employee.name} onChange={this.onNameChange}/>
+                    <Input placeholder={employee.name} onChange={this.onNameChange} />
                     <div className={classes.skillsListContainer}>
                         <Grid container direction='column'>
                             {employee.skills.map(skill =>
                                 <Grid item key={skill.name} className={classes.skillItem}><Grid container direction='row' alignItems='center' justify='flex-end' spacing={16} wrap='nowrap'>
                                     <Grid item className={classes.skillName}>
-                                        <SkillsSuggestor 
-                                            placeholder={skill.name} 
-                                            skills={this.state.skills} 
-                                            onError={this.props.onError} 
-                                            onChange={this.onSkillNameChange}
+                                        <SkillsSuggestor
+                                            placeholder={skill.name}
+                                            skills={this.state.skills}
+                                            onError={this.props.onError}
+                                            onChange={this.onSkillNameChange(skill)}
                                         />
                                     </Grid>
                                     <Grid item><Input type='number' className={classes.skillLevel}
                                         inputProps={{ min: 0, max: 3 }} defaultValue={skill.level}
-                                        onChange={this.onSkillLevelChange(skill)}/>
+                                        onChange={this.onSkillLevelChange(skill)} />
                                     </Grid>
                                     <Grid item><IconButton aria-label="Delete"
                                         onClick={this.onSkillDeletionRequest(skill)}><DeleteIcon />

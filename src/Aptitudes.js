@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withSnackbar } from 'notistack';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import CreateEmployee from './CreateEmployee';
+import { Grid, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import uuidv4 from 'uuid/v4';
 import Employee from './Employee';
 import EmployeeService from './EmployeeService';
+import EditEmployee from './EditEmployee';
 
 const styles = () => ({
     employee: {
         height: '300px',
-        width: '300px'
+        width: '300px',
     }
 })
 
@@ -21,8 +22,9 @@ class Aptitudes extends Component {
             employees: [],
             creatingEmployee: false,
         };
-        this.createEmployee = this.createEmployee.bind(this);
+        this.onEmployeeCreationRequested = this.onEmployeeCreationRequested.bind(this);
         this.onEmployeeCreated = this.onEmployeeCreated.bind(this);
+        this.onEmployeeCreationDone = this.onEmployeeCreationDone.bind(this);
         this.onError = this.onError.bind(this);
         this.onEmployeeDeletionRequested = this.onEmployeeDeletionRequested.bind(this);
     }
@@ -37,13 +39,22 @@ class Aptitudes extends Component {
                     this.props.onRefreshed();
             });
     }
-    createEmployee() {
+    onEmployeeCreationRequested() {
         this.setState({ creatingEmployee: true });
     }
-    onEmployeeCreated() {
+    onEmployeeCreated(employee) {
+        EmployeeService.create(employee)
+            .then(() => {
+                this.message("employee " + employee.name + " created");
+            })
+            .catch(err => {
+                this.error("employee creation failed: " + err);
+            }).finally(() => {
+                this.loadEmployees();
+            });
+    }
+    onEmployeeCreationDone() {
         this.setState({ creatingEmployee: false });
-        this.message("employee added");
-        this.loadEmployees();
     }
     onEmployeeDeletionRequested(employee) {
         EmployeeService.delete(employee)
@@ -86,16 +97,23 @@ class Aptitudes extends Component {
             <div>
                 <Grid container direction='row' className={classes.root} spacing={8}>
                     {employees.map(employee => <Grid key={employee.name} className={classes.employee}>
-                        <Employee employee={employee}
+                        <Employee
+                            employee={employee}
                             onDelete={this.onEmployeeDeletionRequested}
                             onChange={this.onEmployeeChanged(clone(employee))}
                             onError={this.onError}
                         />
                     </Grid>)}
                 </Grid>
-                <Button variant='outlined' onClick={this.createEmployee}>Do you wanna create?</Button>
+                <Fab onClick={this.onEmployeeCreationRequested}><AddIcon fontSize='large' />
+                </Fab>
                 {this.state.creatingEmployee
-                    ? <CreateEmployee onCreated={this.onEmployeeCreated} onError={this.onError} />
+                    ? <div className={classes.employee}><EditEmployee
+                        employee={{ id: uuidv4(), name: '', skills: [] }}
+                        onChange={this.onEmployeeCreated}
+                        onClose={this.onEmployeeCreationDone}
+                        onError={this.onError}
+                    /></div>
                     : null
                 }
             </div>
