@@ -24,8 +24,8 @@ class Employee extends Component {
     onEdit = () => {
         this.setState({ readOnly: false });
     }
-    onChange = () => {
-        this.props.onChange(this.props.employee);
+    onChange = (employee) => {
+        this.props.onChange(employee);
     }
     onEditionDone = () => {
         this.setState({ readOnly: true });

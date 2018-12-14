@@ -6,6 +6,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import SkillsSuggestor from './SkillsSuggestor';
+import clonedeep from 'lodash/cloneDeep'
 
 const styles = () => ({
     employee: {
@@ -45,15 +46,22 @@ const styles = () => ({
 });
 
 class EditEmployee extends Component {
+    constructor() {
+        super();
+        this.state = { employee: {} };
+    }
+    static getDerivedStateFromProps(nextProps, previousState) {
+        return { employee: clonedeep(nextProps.employee) };
+    }
     onDone = () => {
-        this.props.onChange(this.props.employee);
+        this.props.onChange(this.state.employee);
         this.props.onClose();
     }
     onCancel = () => {
         this.props.onClose();
     }
     onNameChange = (event) => {
-        this.props.employee.name = event.target.value;
+        this.state.employee.name = event.target.value;
     }
     onSkillLevelChange = skill => event => {
         skill.level = event.target.value;
@@ -62,16 +70,17 @@ class EditEmployee extends Component {
         skill.name = event.target.value;
     }
     onSkillDeletionRequest = skill => () => {
-        const skills = this.props.employee.skills;
+        const skills = this.state.employee.skills;
         skills.splice(skills.indexOf(skill), 1);
         this.forceUpdate();
     }
     onAddSkill = () => {
-        this.props.employee.skills.push({ name: "", level: 0 });
+        this.state.employee.skills.push({ name: "", level: 0 });
         this.forceUpdate();
     }
     render() {
-        const { employee, classes } = this.props;
+        const { classes } = this.props;
+        const { employee } = this.state;
         return (
             <Card className={classes.employee}>
                 <CardContent className={classes.cardContent}>

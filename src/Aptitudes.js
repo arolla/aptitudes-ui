@@ -158,7 +158,7 @@ class Aptitudes extends Component {
                         <Employee
                             employee={employee} allSkills={allSkills}
                             onDelete={this.onEmployeeDeletionRequested}
-                            onChange={this.onEmployeeChanged(clone(employee))}
+                            onChange={this.onEmployeeChanged(employee)}
                         />
                     </Grid>)}
                 </Grid>
@@ -177,6 +177,5 @@ class Aptitudes extends Component {
 }
 
 const containsOne = (array1, array2) => array1.some(item => array2.indexOf(item.name) >= 0);
-const clone = source => Object.assign({}, source);
 
 export default withStyles(styles)(withSnackbar(Aptitudes));
