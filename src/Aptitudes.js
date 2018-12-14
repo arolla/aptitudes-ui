@@ -162,8 +162,7 @@ class Aptitudes extends Component {
                         />
                     </Grid>)}
                 </Grid>
-                <Fab onClick={this.onEmployeeCreationRequested}><AddIcon fontSize='large' />
-                </Fab>
+                <Fab onClick={this.onEmployeeCreationRequested}><AddIcon fontSize='large' /></Fab>
                 {this.state.creatingEmployee
                     ? <div className={classes.employee}><EditEmployee
                         employee={{ id: uuidv4(), name: '', skills: [] }}

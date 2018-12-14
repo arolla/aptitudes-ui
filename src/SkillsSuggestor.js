@@ -28,7 +28,6 @@ const styles = theme => ({
 class SkillsSuggestor extends Component {
     constructor() {
         super();
-
         this.state = {
             suggestions: [],
             value: '',
