@@ -25,7 +25,6 @@ const styles = theme => ({
     },
 });
 
-
 class SkillsSuggestor extends Component {
     constructor() {
         super();
@@ -36,6 +35,13 @@ class SkillsSuggestor extends Component {
         };
         this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
         this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+    }
+
+    static getDerivedStateFromProps(nextProps, previousState) {
+        if (nextProps.value == '')
+            return { value: '' };
+        else
+            return null;
     }
 
     getSuggestions(value) {
@@ -69,7 +75,6 @@ class SkillsSuggestor extends Component {
 
     renderInputComponent(inputProps) {
         const { classes, inputRef = () => { }, ref, ...other } = inputProps;
-
         return (
             <TextField
                 fullWidth
@@ -90,7 +95,6 @@ class SkillsSuggestor extends Component {
     renderSuggestion(suggestion, { query, isHighlighted }) {
         const matches = match(suggestion, query);
         const parts = parse(suggestion, matches);
-
         return (
             <MenuItem selected={isHighlighted} component="div">
                 <div>

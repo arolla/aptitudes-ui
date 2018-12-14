@@ -35,12 +35,14 @@ class Employee extends Component {
         this.setState({ readOnly: true });
     }
     render() {
-        const { employee, classes } = this.props;
+        const { employee, classes, allSkills } = this.props;
         const { readOnly } = this.state;
         return (
             <div className={classes.employee}>{readOnly
                 ? <ReadOnlyEmployee employee={employee} className={classes.employee} onEdit={this.onEdit} onDelete={this.onDelete} />
-                : <EditEmployee employee={employee} className={classes.employee} onChange={this.onChange} onClose={this.onEditionDone} onError={this.props.onError} />
+                : <EditEmployee employee={employee} allSkills={allSkills}
+                    className={classes.employee} onChange={this.onChange} onClose={this.onEditionDone} 
+                />
             }</div>
         )
     }

@@ -4,7 +4,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
-import EmployeeService from './EmployeeService';
 import { withStyles } from '@material-ui/core/styles';
 import SkillsSuggestor from './SkillsSuggestor';
 
@@ -48,18 +47,10 @@ const styles = () => ({
 class EditEmployee extends Component {
     constructor() {
         super();
-        this.state = {
-            skills: [],
-        }
         this.onDone = this.onDone.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.onNameChange = this.onNameChange.bind(this);
         this.onAddSkill = this.onAddSkill.bind(this);
-    }
-    componentDidMount() {
-        EmployeeService.skills()
-            .then(skills => this.setState({ skills }))
-            .catch(err => this.props.onError(err));
     }
 
     onDone() {
@@ -100,8 +91,7 @@ class EditEmployee extends Component {
                                     <Grid item className={classes.skillName}>
                                         <SkillsSuggestor
                                             placeholder={skill.name}
-                                            skills={this.state.skills}
-                                            onError={this.props.onError}
+                                            skills={this.props.allSkills}
                                             onChange={this.onSkillNameChange(skill)}
                                         />
                                     </Grid>
