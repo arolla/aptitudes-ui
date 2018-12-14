@@ -33,15 +33,10 @@ const styles = () => ({
 });
 
 class Employee extends Component {
-    constructor() {
-        super();
-        this.onDelete = this.onDelete.bind(this);
-        this.onEdit = this.onEdit.bind(this);
-    }
-    onDelete() {
+    onDelete = () => {
         this.props.onDelete();
     }
-    onEdit() {
+    onEdit = () => {
         this.props.onEdit();
     }
     render() {

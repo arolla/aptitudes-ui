@@ -45,22 +45,14 @@ const styles = () => ({
 });
 
 class EditEmployee extends Component {
-    constructor() {
-        super();
-        this.onDone = this.onDone.bind(this);
-        this.onCancel = this.onCancel.bind(this);
-        this.onNameChange = this.onNameChange.bind(this);
-        this.onAddSkill = this.onAddSkill.bind(this);
-    }
-
-    onDone() {
+    onDone = () => {
         this.props.onChange(this.props.employee);
         this.props.onClose();
     }
-    onCancel() {
+    onCancel = () => {
         this.props.onClose();
     }
-    onNameChange(event) {
+    onNameChange = (event) => {
         this.props.employee.name = event.target.value;
     }
     onSkillLevelChange = skill => event => {
@@ -74,7 +66,7 @@ class EditEmployee extends Component {
         skills.splice(skills.indexOf(skill), 1);
         this.forceUpdate();
     }
-    onAddSkill() {
+    onAddSkill = () => {
         this.props.employee.skills.push({ name: "", level: 0 });
         this.forceUpdate();
     }

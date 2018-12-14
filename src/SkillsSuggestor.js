@@ -33,8 +33,6 @@ class SkillsSuggestor extends Component {
             suggestions: [],
             value: '',
         };
-        this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
-        this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     }
 
     static getDerivedStateFromProps(nextProps, previousState) {

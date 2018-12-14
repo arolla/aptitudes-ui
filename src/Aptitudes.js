@@ -27,13 +27,6 @@ class Aptitudes extends Component {
             editedFilterSkill: '',
             creatingEmployee: false,
         };
-        this.onEmployeeCreationRequested = this.onEmployeeCreationRequested.bind(this);
-        this.onEmployeeCreated = this.onEmployeeCreated.bind(this);
-        this.onEmployeeCreationDone = this.onEmployeeCreationDone.bind(this);
-        this.onEmployeeDeletionRequested = this.onEmployeeDeletionRequested.bind(this);
-        this.onFilterSkillAdded = this.onFilterSkillAdded.bind(this);
-        this.onEditedFilterSkillChanged = this.onEditedFilterSkillChanged.bind(this);
-        this.onError = this.onError.bind(this);
     }
 
     componentDidMount() {
@@ -57,10 +50,10 @@ class Aptitudes extends Component {
             .catch(err => this.props.onError(err));
     }
 
-    onEmployeeCreationRequested() {
+    onEmployeeCreationRequested = () => {
         this.setState({ creatingEmployee: true });
     }
-    onEmployeeCreated(employee) {
+    onEmployeeCreated = (employee) => {
         EmployeeService.create(employee)
             .then(() => {
                 this.message("employee " + employee.name + " created");
@@ -71,7 +64,7 @@ class Aptitudes extends Component {
                 this.refresh();
             });
     }
-    onEmployeeCreationDone() {
+    onEmployeeCreationDone = () => {
         this.setState({ creatingEmployee: false });
     }
     onEmployeeChanged = oldEmployee => newEmployee => {
@@ -86,7 +79,7 @@ class Aptitudes extends Component {
                 this.refresh();
             });
     }
-    onEmployeeDeletionRequested(employee) {
+    onEmployeeDeletionRequested = (employee) => {
         EmployeeService.delete(employee)
             .then(() => {
                 this.message("employee " + employee.name + " deleted");
@@ -98,7 +91,7 @@ class Aptitudes extends Component {
                 this.refresh();
             });
     }
-    onFilterSkillAdded() {
+    onFilterSkillAdded = () => {
         if (this.state.editedFilterSkill === '')
             return;
         this.setState(state => {
@@ -117,7 +110,7 @@ class Aptitudes extends Component {
         });
         this.filter();
     }
-    onEditedFilterSkillChanged(event) {
+    onEditedFilterSkillChanged = (event) => {
         this.setState({ editedFilterSkill: event.target.value });
     }
     filter() {
@@ -131,7 +124,7 @@ class Aptitudes extends Component {
                 return { filteredEmployees: state.employees };
         });
     }
-    onError(error) {
+    onError = (error) => {
         this.error("employee creation failed: " + error);
     }
     message(message) {

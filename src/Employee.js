@@ -17,21 +17,17 @@ class Employee extends Component {
         this.state = {
             readOnly: true,
         }
-        this.onEdit = this.onEdit.bind(this);
-        this.onEditionDone = this.onEditionDone.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.onDelete = this.onDelete.bind(this);
     }
-    onDelete() {
+    onDelete = () => {
         this.props.onDelete(this.props.employee);
     }
-    onEdit() {
+    onEdit = () => {
         this.setState({ readOnly: false });
     }
-    onChange() {
+    onChange = () => {
         this.props.onChange(this.props.employee);
     }
-    onEditionDone() {
+    onEditionDone = () => {
         this.setState({ readOnly: true });
     }
     render() {
