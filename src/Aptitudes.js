@@ -135,7 +135,7 @@ class Aptitudes extends Component {
     }
 
     render() {
-        const { filteredEmployees, allSkills, filterSkills, editedFilterSkill } = this.state;
+        const { filteredEmployees, allSkills, filterSkills, editedFilterSkill, creatingEmployee } = this.state;
         const { classes } = this.props;
         return (
             <div>
@@ -163,7 +163,7 @@ class Aptitudes extends Component {
                     </Grid>)}
                 </Grid>
                 <Fab onClick={this.onEmployeeCreationRequested}><AddIcon fontSize='large' /></Fab>
-                {this.state.creatingEmployee
+                {creatingEmployee
                     ? <div className={classes.employee}><EditEmployee
                         employee={{ id: uuidv4(), name: '', skills: [] }}
                         onChange={this.onEmployeeCreated}

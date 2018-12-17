@@ -46,12 +46,9 @@ const styles = () => ({
 });
 
 class EditEmployee extends Component {
-    constructor() {
-        super();
-        this.state = { employee: {} };
-    }
-    static getDerivedStateFromProps(nextProps, previousState) {
-        return { employee: clonedeep(nextProps.employee) };
+    constructor(props) {
+        super(props);
+        this.state = { employee: clonedeep(props.employee) };
     }
     onDone = () => {
         this.props.onChange(this.state.employee);
@@ -61,22 +58,36 @@ class EditEmployee extends Component {
         this.props.onClose();
     }
     onNameChange = (event) => {
-        this.state.employee.name = event.target.value;
+        const name = event.target.value;
+        this.setState(state => {
+            return { employee: { ...state.employee, name } };
+        })
     }
-    onSkillLevelChange = skill => event => {
-        skill.level = event.target.value;
+    onSkillLevelChange = oldSkill => event => {
+        const level = Number(event.target.value);
+        this.setState(state => {
+            const newSkills = updateArrayItem(state.employee.skills, oldSkill, 'level', level);
+            return { employee: { ...state.employee, skills: newSkills } };
+        });
     }
-    onSkillNameChange = skill => event => {
-        skill.name = event.target.value;
+    onSkillNameChange = oldSkill => event => {
+        const name = event.target.value;
+        this.setState(state => {
+            const newSkills = updateArrayItem(state.employee.skills, oldSkill, 'name', name);
+            return { employee: { ...state.employee, skills: newSkills } };
+        });
     }
-    onSkillDeletionRequest = skill => () => {
-        const skills = this.state.employee.skills;
-        skills.splice(skills.indexOf(skill), 1);
-        this.forceUpdate();
+    onSkillDeletionRequest = skillToDelete => () => {
+        this.setState(state => {
+            const newSkills = state.employee.skills.filter(skill => skill !== skillToDelete);
+            return { employee: { ...state.employee, skills: newSkills } };
+        })
     }
     onAddSkill = () => {
-        this.state.employee.skills.push({ name: "", level: 0 });
-        this.forceUpdate();
+        this.setState(state => {
+            const newSkills = state.employee.skills.concat({ name: "", level: 0 });
+            return { employee: { ...state.employee, skills: newSkills } };
+        })
     }
     render() {
         const { classes } = this.props;
@@ -84,7 +95,7 @@ class EditEmployee extends Component {
         return (
             <Card className={classes.employee}>
                 <CardContent className={classes.cardContent}>
-                    <Input placeholder={employee.name} onChange={this.onNameChange} />
+                    <Input value={employee.name} onChange={this.onNameChange} />
                     <div className={classes.skillsListContainer}>
                         <Grid container direction='column'>
                             {employee.skills.map(skill =>
@@ -92,7 +103,7 @@ class EditEmployee extends Component {
                                     <Grid container direction='row' alignItems='center' justify='flex-end' spacing={16} wrap='nowrap'>
                                         <Grid item className={classes.skillName}>
                                             <SkillsSuggestor
-                                                placeholder={skill.name}
+                                                value={skill.name}
                                                 skills={this.props.allSkills}
                                                 onChange={this.onSkillNameChange(skill)}
                                             />
@@ -118,6 +129,15 @@ class EditEmployee extends Component {
             </Card>
         )
     }
+}
+
+const updateArrayItem = (array, itemToUpdate, propertyToUpdate, value) => {
+    return array.map(item => {
+        if (item === itemToUpdate)
+            return { ...item, [propertyToUpdate]: value };
+        else
+            return item;
+    });
 }
 
 export default withStyles(styles)(EditEmployee);

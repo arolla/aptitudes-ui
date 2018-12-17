@@ -26,19 +26,11 @@ const styles = theme => ({
 });
 
 class SkillsSuggestor extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             suggestions: [],
-            value: '',
         };
-    }
-
-    static getDerivedStateFromProps(nextProps, previousState) {
-        if (nextProps.value === '')
-            return { value: '' };
-        else
-            return null;
     }
 
     getSuggestions(value) {
@@ -58,7 +50,6 @@ class SkillsSuggestor extends Component {
     }
 
     onChange = (event, { newValue }) => {
-        this.setState({ value: newValue });
         this.props.onChange({ target: { value: newValue } });
     };
 
@@ -96,11 +87,12 @@ class SkillsSuggestor extends Component {
             <MenuItem selected={isHighlighted} component="div">
                 <div>
                     {parts.map((part, index) => {
-                        return part.highlight ? (
-                            <span key={String(index)} style={{ fontWeight: 500 }}>
-                                {part.text}
-                            </span>
-                        ) : (
+                        return part.highlight
+                            ? (
+                                <span key={String(index)} style={{ fontWeight: 500 }}>
+                                    {part.text}
+                                </span>
+                            ) : (
                                 <strong key={String(index)} style={{ fontWeight: 300 }}>
                                     {part.text}
                                 </strong>
@@ -112,13 +104,14 @@ class SkillsSuggestor extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, value, placeholder } = this.props;
+        const { suggestions } = this.state;
 
         return (
             <div className={classes.root}>
                 <Autosuggest
                     renderInputComponent={this.renderInputComponent}
-                    suggestions={this.state.suggestions}
+                    suggestions={suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                     getSuggestionValue={(skill) => skill}
@@ -126,8 +119,8 @@ class SkillsSuggestor extends Component {
 
                     inputProps={{
                         classes,
-                        placeholder: this.props.placeholder,
-                        value: this.state.value,
+                        placeholder,
+                        value,
                         onChange: this.onChange,
                     }}
                     theme={{
