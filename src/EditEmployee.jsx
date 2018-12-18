@@ -105,8 +105,8 @@ class EditEmployee extends Component {
                     <Input value={employee.name} onChange={this.onNameChange} />
                     <div className={classes.skillsListContainer}>
                         <Grid container direction='column'>
-                            {employee.skills.map(skill =>
-                                <Grid item key={skill.name} className={classes.skillItem}>
+                            {employee.skills.map((skill, index) =>
+                                <Grid item key={employee.name + index} className={classes.skillItem}>
                                     <Grid container direction='row' alignItems='center' justify='flex-end' spacing={16} wrap='nowrap'>
                                         <Grid item className={classes.skillName}>
                                             <SkillsSuggestor
