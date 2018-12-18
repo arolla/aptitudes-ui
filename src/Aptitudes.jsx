@@ -137,7 +137,7 @@ class Aptitudes extends Component {
         return (
             <div>
                 <Grid container direction="row">
-                    <Grid item xs={2}>
+                    <Grid item xs={2} onKeyPress={(event) => {if (event.key === 'Enter') this.onFilterSkillAdded()}}>
                         <SkillsSuggestor
                             skills={allSkills}
                             placeholder='filter'

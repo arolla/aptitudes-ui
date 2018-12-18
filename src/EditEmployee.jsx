@@ -93,7 +93,14 @@ class EditEmployee extends Component {
         const { classes } = this.props;
         const { employee } = this.state;
         return (
-            <Card className={classes.employee}>
+            <Card className={classes.employee}
+                onKeyUp={(event) => {
+                    if (event.key === 'Enter')
+                        this.onDone();
+                    else if (event.key === 'Escape')
+                        this.onCancel();
+                }}
+            >
                 <CardContent className={classes.cardContent}>
                     <Input value={employee.name} onChange={this.onNameChange} />
                     <div className={classes.skillsListContainer}>
