@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Aptitudes from './Aptitudes';
+import Aptitudes from './Aptitudes.jsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { SnackbarProvider } from 'notistack';
 import * as serviceWorker from './serviceWorker';
