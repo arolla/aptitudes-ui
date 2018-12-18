@@ -42,12 +42,12 @@ class Aptitudes extends Component {
                 this.setState({ employees });
                 this.filter();
             })
-            .catch(err => this.props.onError(err));
+            .catch(err => this.error(err));
     }
     loadAllSkills() {
         EmployeeService.skills()
             .then(allSkills => this.setState({ allSkills }))
-            .catch(err => this.props.onError(err));
+            .catch(err => this.error(err));
     }
 
     onEmployeeCreationRequested = () => {
@@ -124,9 +124,6 @@ class Aptitudes extends Component {
                 return { filteredEmployees: state.employees };
         });
     }
-    onError = (error) => {
-        this.error("employee creation failed: " + error);
-    }
     message(message) {
         this.props.enqueueSnackbar(message, { variant: 'info' });
     }
@@ -165,7 +162,7 @@ class Aptitudes extends Component {
                 <Fab onClick={this.onEmployeeCreationRequested}><AddIcon fontSize='large' /></Fab>
                 {creatingEmployee
                     ? <div className={classes.employee}><EditEmployee
-                        employee={{ id: uuidv4(), name: '', skills: [] }}
+                        employee={{ id: uuidv4(), name: '', skills: [] }} allSkills={allSkills}
                         onChange={this.onEmployeeCreated}
                         onClose={this.onEmployeeCreationDone}
                     /></div>

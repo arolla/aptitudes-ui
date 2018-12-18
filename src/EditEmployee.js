@@ -119,11 +119,11 @@ class EditEmployee extends Component {
                                 </Grid>
                             )}
                         </Grid>
+                        <IconButton aria-label="Add" onClick={this.onAddSkill}><AddIcon /></IconButton>
                     </div>
                 </CardContent>
                 <CardActions className={classes.actions}>
                     <IconButton aria-label="Cancel" onClick={this.onCancel}><CancelIcon /></IconButton>
-                    <IconButton aria-label="Add" onClick={this.onAddSkill}><AddIcon /></IconButton>
                     <IconButton aria-label="Done" onClick={this.onDone}><CheckIcon /></IconButton>
                 </CardActions>
             </Card>

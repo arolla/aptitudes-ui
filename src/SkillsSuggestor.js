@@ -37,7 +37,7 @@ class SkillsSuggestor extends Component {
         const inputValue = deburr(value.trim()).toLowerCase();
         const inputLength = inputValue.length;
         let count = 0;
-        const suggestions = inputLength === 0
+        const suggestions = inputLength === 0 || !this.props.skills
             ? []
             : this.props.skills.filter(skill => {
                 const keep =
@@ -89,13 +89,13 @@ class SkillsSuggestor extends Component {
                     {parts.map((part, index) => {
                         return part.highlight
                             ? (
-                                <span key={String(index)} style={{ fontWeight: 500 }}>
-                                    {part.text}
-                                </span>
-                            ) : (
-                                <strong key={String(index)} style={{ fontWeight: 300 }}>
+                                <strong key={String(index)}>
                                     {part.text}
                                 </strong>
+                            ) : (
+                                <span key={String(index)}>
+                                    {part.text}
+                                </span>
                             );
                     })}
                 </div>
